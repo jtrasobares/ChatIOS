@@ -9,11 +9,9 @@ import SwiftUI
 
 @main
 struct TSADMChatApp: App {
-    
-    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ViewCoordinator()
         }
     }
 }

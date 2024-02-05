@@ -2,13 +2,6 @@
 //  LoginView.swift
 //  TSADMChat
 //
-//  Created by Jose Ignacio Trasobares Ibor on 5/2/24.
-//
-
-//
-//  LoginView.swift
-//  TSADMChat
-//
 //  Created by Daniel Muñoz on 5/2/24.
 //
  
@@ -22,27 +15,23 @@ struct LoginView : View {
     @State private var username: String = ""
     @State private var avatarItem: PhotosPickerItem?
     @State private var avatarImage: Image?
-    @State private var image = UIImage()
     @State private var showChangeImage = false
     @State private var showImagePopover = false
     @State var type: UIImagePickerController.SourceType = .photoLibrary
  
     @Environment(\.managedObjectContext) var context
     
-    //Check if the user is stored
-    func isUserStored() -> Bool {
-        return UserDefaults.standard.string(forKey: "username") != nil
+    
+    
+    func loginNewUsername() {
+        UserDefaults.standard.set(username, forKey: "username")
+        
     }
     
     var body: some View {
         NavigationView {
             ScrollView {
-                if isUserStored() {
-                    viewIsUserStored()
-                }
-                else {
-                    viewNotUserStored()
-                }
+                viewNotUserStored()
             }
             .navigationTitle("Create Account")
             .background(Color(.init(white: 0, alpha: 0.05))
@@ -50,22 +39,30 @@ struct LoginView : View {
         }
     }
     
-    func viewIsUserStored() -> some View {
+    func viewIsUserStored(username: String, image: Image) -> some View {
         return VStack(spacing: 16) {
-            Text("Welcome \(UserDefaults.standard.string(forKey: "username")!)")
-            Image(uiImage: UIImage(data: UserDefaults.standard.data(forKey: "image")!)!)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 100, height: 100, alignment: .center)
+            Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .padding()
+
+                Text("Welcome, \(username)")
+                    .font(.title)
+                    .padding()
+            }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    // Navigate to the chat view
+                    // This is a temporary solution
+                    // We'll use a navigation link in the future
+                    Text("Navigating to chat view")
+                }
         }.padding()
     }
     
     func viewNotUserStored() -> some View {
         return VStack(spacing: 16) {
-            
-            
             ZStack(alignment: .center, content: {
-                
                 if (avatarImage == nil) {
                     viewPickNewAvatar()
                 }
@@ -123,13 +120,18 @@ struct LoginView : View {
             avatarImage?
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 100, height: 100, alignment: .center)
+                .frame(width: 120, height: 120, alignment: .center)
                 .cornerRadius(50)
+                .padding()
         }
         .photosPicker(isPresented: $showChangeImage, selection: $avatarItem, matching: .images, photoLibrary: .shared())
         .popover(isPresented: $showImagePopover) {
-            ImagePicker(sourceType: .photoLibrary, selectedImage: self.$image)
+            ImagePopupView(image: avatarImage!)
+                .onTapGesture {
+                showImagePopover.toggle()
+            }
         }
+        .padding(.top)
         
     }
     
@@ -138,24 +140,16 @@ struct LoginView : View {
                              matching: .images,
                              photoLibrary: .shared()) {
                     Image(systemName: "person.circle.fill")
-                        .symbolRenderingMode(.multicolor)
-                        .font(.system(size: 100))
-                        .foregroundColor(.accentColor)
+                        .resizable()
+                        .frame(width: 120, height: 120, alignment: .center)
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(50)
                         .padding()
+                        .foregroundColor(.accentColor)
             
                 }
                 .buttonStyle(.borderless)
                 .padding(.top)
-        
-    }
-    
-    func loginNewUsername() {
-        UserDefaults.standard.set(username, forKey: "username")
-        
-    }
-    
-    func SelectImage() {
-        //Select the image from the gallery
         
     }
     

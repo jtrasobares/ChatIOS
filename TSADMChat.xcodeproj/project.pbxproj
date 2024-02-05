@@ -19,6 +19,8 @@
 		668F29842B716EAD00B9E51E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F29832B716EAD00B9E51E /* LoginView.swift */; };
 		66AE2C052B6BA03E00641ACA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE2C042B6BA03D00641ACA /* AppDelegate.swift */; };
 		66EAE5622B48B23C00C595A3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EAE5612B48B23C00C595A3 /* Message.swift */; };
+		6EAEBCCC2B718C0600407F79 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAEBCCB2B718C0600407F79 /* SplashScreen.swift */; };
+		6EAEBCCE2B71911F00407F79 /* ViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAEBCCD2B71911F00407F79 /* ViewCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		668F29832B716EAD00B9E51E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		66AE2C042B6BA03D00641ACA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66EAE5612B48B23C00C595A3 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		6EAEBCCB2B718C0600407F79 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		6EAEBCCD2B71911F00407F79 /* ViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,9 +159,11 @@
 		66AE2C972B6E9DEF00641ACA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6EAEBCCB2B718C0600407F79 /* SplashScreen.swift */,
 				02F95A482B0B4FAC00F4D5C0 /* ContentView.swift */,
 				668F29812B6EB96200B9E51E /* MessageView.swift */,
 				668F29832B716EAD00B9E51E /* LoginView.swift */,
+				6EAEBCCD2B71911F00407F79 /* ViewCoordinator.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -292,9 +298,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EAEBCCC2B718C0600407F79 /* SplashScreen.swift in Sources */,
 				66AE2C052B6BA03E00641ACA /* AppDelegate.swift in Sources */,
 				668F29842B716EAD00B9E51E /* LoginView.swift in Sources */,
 				02F95A492B0B4FAC00F4D5C0 /* ContentView.swift in Sources */,
+				6EAEBCCE2B71911F00407F79 /* ViewCoordinator.swift in Sources */,
 				66EAE5622B48B23C00C595A3 /* Message.swift in Sources */,
 				02F95A472B0B4FAC00F4D5C0 /* TSADMChatApp.swift in Sources */,
 				023FB64E2B0E9B4100FA2FAE /* CloudKitHelper.swift in Sources */,
