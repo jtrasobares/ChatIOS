@@ -16,6 +16,7 @@
 		02F95A662B0B4FAD00F4D5C0 /* TSADMChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F95A652B0B4FAD00F4D5C0 /* TSADMChatUITests.swift */; };
 		02F95A682B0B4FAD00F4D5C0 /* TSADMChatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F95A672B0B4FAD00F4D5C0 /* TSADMChatUITestsLaunchTests.swift */; };
 		668F29822B6EB96200B9E51E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F29812B6EB96200B9E51E /* MessageView.swift */; };
+		668F29842B716EAD00B9E51E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F29832B716EAD00B9E51E /* LoginView.swift */; };
 		66AE2C052B6BA03E00641ACA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE2C042B6BA03D00641ACA /* AppDelegate.swift */; };
 		66EAE5622B48B23C00C595A3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EAE5612B48B23C00C595A3 /* Message.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		02F95A652B0B4FAD00F4D5C0 /* TSADMChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSADMChatUITests.swift; sourceTree = "<group>"; };
 		02F95A672B0B4FAD00F4D5C0 /* TSADMChatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSADMChatUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		668F29812B6EB96200B9E51E /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		668F29832B716EAD00B9E51E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		66AE2C042B6BA03D00641ACA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66EAE5612B48B23C00C595A3 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,6 +157,7 @@
 			children = (
 				02F95A482B0B4FAC00F4D5C0 /* ContentView.swift */,
 				668F29812B6EB96200B9E51E /* MessageView.swift */,
+				668F29832B716EAD00B9E51E /* LoginView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66AE2C052B6BA03E00641ACA /* AppDelegate.swift in Sources */,
+				668F29842B716EAD00B9E51E /* LoginView.swift in Sources */,
 				02F95A492B0B4FAC00F4D5C0 /* ContentView.swift in Sources */,
 				66EAE5622B48B23C00C595A3 /* Message.swift in Sources */,
 				02F95A472B0B4FAC00F4D5C0 /* TSADMChatApp.swift in Sources */,
