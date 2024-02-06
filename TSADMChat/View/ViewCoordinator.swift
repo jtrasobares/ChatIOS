@@ -10,11 +10,24 @@ import SwiftUI
 
 struct ViewCoordinator: View {
     @State private var isActive = false
+    @State private var isLogged = isUserStored()
     var body: some View {
         if isActive {
-            ContentView()
+            ContentCoordinator()
         }else {
-            SplashScreen(isActive: $isActive)
+            SplashScreen(isActive: $isActive, isLogged: $isLogged)
+        }
+    }
+}
+
+struct ContentCoordinator: View {
+    @State private var isLogged = isUserStored()
+
+    var body: some View {
+        if isLogged {
+            ContentView()
+        } else {
+            LoginView(isLogged: $isLogged)
         }
     }
 }
