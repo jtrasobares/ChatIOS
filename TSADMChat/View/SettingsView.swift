@@ -1,37 +1,33 @@
 //
-//  LoginView.swift
+//  SettingsView.swift
 //  TSADMChat
 //
-//  Created by Daniel Muñoz on 5/2/24.
+//  Created by Daniel Muñoz on 6/2/24.
 //
- 
+
 import Foundation
 import SwiftUI
 import PhotosUI
- 
-struct LoginView : View {
-    //It'll have a username and an image
-    //Both will be requested if they're not saved "isUserStored()"
-    @State private var username: String = ""
+
+struct SettingsView : View {
+    @Binding var username: String
     @State private var avatarItem: PhotosPickerItem?
-    @State private var avatarImageData: Data? = nil
+    @Binding var avatarImageData: Data?
     @State private var showChangeImage = false
     @State private var showImagePopover = false
     @State private var showCameraPop = false
     @State var type: UIImagePickerController.SourceType = .photoLibrary
     
-    @Binding var isLogged: Bool
- 
+    
     @Environment(\.managedObjectContext) var context
     
-    //TODO: Log the user properly
-    func loginNewUsername() {
+    func editUsername() {
         UserDefaults.standard.set(username, forKey: "username")
         UserDefaults.standard.set(avatarImageData, forKey: "avatar")
-        isLogged = true
     }
     
     var body: some View {
+        //TODO: Add return button
         NavigationView {
             ScrollView {
                 VStack(spacing: 16) {
@@ -41,37 +37,29 @@ struct LoginView : View {
                         .padding()
                         .background(Color(.white))
                         .cornerRadius(10)
-                                    
+                                     
                     Button {
-                        loginNewUsername()
+                        editUsername()
                     } label: {
                         HStack {
                             Spacer()
-                            Text("Create Account")
+                            Text("Settings")
                                 .foregroundColor(.white)
                                 .padding(.vertical, 10)
                                 .font(.system(size: 14, weight: .semibold))
                             Spacer()
                         }.background(Color.blue)
                          .cornerRadius(10)
-                        
                     }
                 }.padding()
             }
             .navigationTitle("Create Account")
-            .background(Color(.init(white: 0, alpha: 0.05))
-                            .ignoresSafeArea())
         }
     }
     
     func avatarModularIcon() -> some View {
         return ZStack(alignment: .center, content: {
-            if (avatarImageData == nil) {
-                viewPickNewAvatar()
-            }
-            else {
-                viewEditAvatar()
-            }
+            viewEditAvatar()
         })
         .onChange(of: avatarItem) {
             Task {
@@ -131,28 +119,11 @@ struct LoginView : View {
         .padding(.top)
         
     }
-    
-    func viewPickNewAvatar() -> some View {
-        return PhotosPicker(selection: $avatarItem,
-                             matching: .images,
-                             photoLibrary: .shared()) {
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .frame(width: 120, height: 120, alignment: .center)
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(50)
-                        .padding()
-                        .foregroundColor(.accentColor)
-            
-                }
-                .buttonStyle(.borderless)
-                .padding(.top)
-    }
 }
- 
+
 //Preview
-struct LoginView_Previews: PreviewProvider {
+struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(isLogged: .constant(false))
+        SettingsView(username: .constant("UserTest"), avatarImageData: .constant(Data()))
     }
 }

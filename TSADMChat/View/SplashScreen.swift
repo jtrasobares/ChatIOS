@@ -15,7 +15,6 @@ struct SplashScreen: View {
     
     //TODO: Get the username and image correctly
     var username: String = UserDefaults.standard.string(forKey: "username") ?? "UserTest"
-    
     var avatarImage: Image = UserDefaults.standard.string(forKey: "avatar") != nil ? Image(uiImage: UIImage(data: UserDefaults.standard.data(forKey: "avatar")!)!) : Image(systemName: "person.circle.fill")
     
     var body: some View {
@@ -34,6 +33,7 @@ struct SplashScreen: View {
             }
         }.onAppear {
             //TODO: change the loading time to the API call to retrieve chats from cloud or local storage
+            //Add to retrieve whatever data is needed and lock until if required
             let time = 2.0
             DispatchQueue.main.asyncAfter(deadline: .now() + time) {
                 withAnimation(.easeInOut(duration: 1)) {
@@ -58,14 +58,14 @@ struct SplashScreen: View {
     
     func ViewDefaultSplashScreen() -> some View {
         return VStack {
-            //Default image is Logo_Transparent from assets
-            Image("Logo_Transparent")
+            //Default image for the app, OneThread
+            Image("LogoTransparent")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding()
-            Text("Welcome into the chat!")
+            Text("Welcome to OneThread!")
                 .font(.title)
-                .padding([.top], 30)
+                .padding([.top], 40)
                 .padding([.bottom], 40)
         }
     }
