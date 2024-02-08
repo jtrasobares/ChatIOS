@@ -17,6 +17,7 @@ func imagePopupView(imageData: Data) -> some View {
             .frame(width: .infinity, height: nil, alignment: .center)
             .cornerRadius(10)
             .padding()
+            .presentationDragIndicator(.visible)
     }
 }
 
