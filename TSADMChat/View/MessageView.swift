@@ -16,7 +16,7 @@ struct MessageView: View{
             HStack(alignment: .bottom) {
                 Spacer()
                 VStack(alignment: .leading){
-                    Text(message.user)
+                    Text(message.user!)
                         .padding(.top, 4)
                         .padding(.leading,12)
                         .padding(.trailing, 12)
@@ -24,7 +24,7 @@ struct MessageView: View{
                         .bold()
                         .font(.footnote)
                         .foregroundColor(.white)
-                    Text(message.text)
+                    Text(message.text!)
                         .padding(.top,0)
                         .padding(.bottom,8)
                         .padding(.horizontal, 12)
@@ -56,7 +56,7 @@ struct MessageView: View{
                                     .cornerRadius(20)
                 VStack(alignment: .leading){
                     
-                    Text(message.user)
+                    Text(message.user!)
                         .padding(.top, 4)
                         .padding(.leading,12)
                         .padding(.trailing, 12)
@@ -64,7 +64,7 @@ struct MessageView: View{
                         .font(.footnote)
                         .bold()
                         .foregroundColor(.white)
-                    Text(message.text)
+                    Text(message.text!)
                         .padding(.top,0)
                         .padding(.bottom,8)
                         .padding(.horizontal, 12)

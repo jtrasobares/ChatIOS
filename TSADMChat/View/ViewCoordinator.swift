@@ -10,7 +10,8 @@ import SwiftUI
 
 struct ViewCoordinator: View {
     @State private var isActive = false
-    @State private var isLogged = isUserStored()
+    @State private var isLogged = true//isUserStored()
+    
     var body: some View {
         if isActive {
             ContentCoordinator()
@@ -21,7 +22,7 @@ struct ViewCoordinator: View {
 }
 
 struct ContentCoordinator: View {
-    @State private var isLogged = isUserStored()
+    @State private var isLogged = true//isUserStored()
 
     var body: some View {
         if isLogged {

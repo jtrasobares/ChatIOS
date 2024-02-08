@@ -9,13 +9,13 @@
 
 import SwiftUI
 import CloudKit
+import SwiftData
 
 struct ContentView: View {
+    @Environment(\.modelContext) var modelContext
     @State private var message: String = ""
-    @State var messages: [Message] = []
-    @State var userID: String = ""
-    @State var subscription: CKSubscription?
-    @Environment(\.colorScheme) var colorScheme
+    @Query var messages: [Message]
+    @State var date: Date?
     
     var body: some View {
         NavigationStack{
@@ -28,7 +28,6 @@ struct ContentView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .listStyle(.plain)
-                    .background(Color.white)
                     .onChange(of: messages) { oldValue, newValue in
                         guard oldValue.count < newValue.count else { return }
                         withAnimation {
@@ -69,12 +68,12 @@ struct ContentView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .onAppear {
+                    
                     initialize()
                     withAnimation {
                         proxy.scrollTo(messages.last, anchor: .bottom)
                     }
                 }
-                .background(colorScheme == .dark ? Color.black : Color.white)
             }
             .navigationTitle("Chat")
             .toolbar{
@@ -92,7 +91,8 @@ struct ContentView: View {
         Task{
             do{
                 try await CloudKitHelper().sendMessage(text)
-                messages.append(Message(id:"Local",user:"__defaultOwner__",text: message))
+                modelContext.insert(Message(id:"Local",user:"__defaultOwner__",text: message))
+                UserDefaults.standard.set(Date.now, forKey: "date")
                 message = ""
             }catch let error{
                 print(error.localizedDescription)
@@ -103,15 +103,17 @@ struct ContentView: View {
     
     public func initialize(){
         Task{
-            do{
-                userID = try await CloudKitHelper().myUserRecordID()
-                CloudKitHelper().requestNotificationPermissions()
-                subscription = try await CloudKitHelper().checkForSubscriptions()
+            NotificationCenter.default.addObserver(forName: NSNotification.Name("Download"), object: nil, queue: .main, using: { notification in
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.5){
+                    Task{
+                        date = UserDefaults.standard.object(forKey: "date") as! Date?
+                        await CloudKitHelper().downloadMessages(from: date, perRecord: updateMessages)
+                        UserDefaults.standard.set(Date.now, forKey: "date")
+                    }
+                    
+                }
                 
-                let _ = await CloudKitHelper().downloadMessages(from: nil, perRecord: updateMessages)
-            }catch let error{
-                print(error.localizedDescription)
-            }
+            })
             
         }
         
@@ -122,11 +124,19 @@ struct ContentView: View {
         case .success(let record):
             let text = record["text"]! as String
             let user = record.creatorUserRecordID!.recordName
-            messages.append(Message(id:recordID.recordName,user: user,text:text))
-            print(user)
+            do{
+                modelContext.insert(Message(id:recordID.recordName,user: user,text:text))
+                try modelContext.save()
+            }catch{
+                print(error.localizedDescription)
+            }
+            
+            UserDefaults.standard.set(Date.now, forKey: "date")
         case .failure(let error):
             // Handle the error
             print("Error for Record ID \(recordID): \(error.localizedDescription)")
         }
     }
+    
+    
 }

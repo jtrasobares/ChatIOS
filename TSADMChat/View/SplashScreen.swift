@@ -7,8 +7,10 @@
 
 import Foundation
 import SwiftUI
+import CloudKit
 
 struct SplashScreen: View {
+    @Environment(\.modelContext) var modelContext
     @State private var scale = 0.7
     @Binding var isActive: Bool
     @Binding var isLogged: Bool
@@ -32,10 +34,22 @@ struct SplashScreen: View {
                 }
             }
         }.onAppear {
-            //TODO: change the loading time to the API call to retrieve chats from cloud or local storage
-            //Add to retrieve whatever data is needed and lock until if required
-            let time = 2.0
-            DispatchQueue.main.asyncAfter(deadline: .now() + time) {
+
+            Task{
+                do{
+                    
+                    let date = UserDefaults.standard.object(forKey: "date") as! Date?
+                    if(date != nil){
+                        print("Date: "+date!.formatted())
+                    }
+                    
+                    CloudKitHelper().requestNotificationPermissions()
+                    try await CloudKitHelper().checkForSubscriptions()
+                    await CloudKitHelper().downloadMessages(from: date, perRecord: updateLastMessages)
+                    UserDefaults.standard.set(Date.now, forKey: "date")
+                }catch{
+                    
+                }
                 withAnimation(.easeInOut(duration: 1)) {
                     self.isActive = true
                 }
@@ -67,6 +81,21 @@ struct SplashScreen: View {
                 .font(.title)
                 .padding([.top], 40)
                 .padding([.bottom], 40)
+        }
+    }
+    
+    public func updateLastMessages(_ recordID: CKRecord.ID, _ recordResult: Result<CKRecord, Error>){
+        switch recordResult {
+        case .success(let record):
+            let text = record["text"] as String?
+            let user = record.creatorUserRecordID!.recordName
+            if(text != nil){
+                modelContext.insert(Message(id:recordID.recordName,user: user,text:text))
+            }
+            UserDefaults.standard.set(Date.now, forKey: "date")
+        case .failure(let error):
+            // Handle the error
+            print("Error for Record ID \(recordID): \(error.localizedDescription)")
         }
     }
 }

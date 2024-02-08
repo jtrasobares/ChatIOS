@@ -19,8 +19,7 @@ struct CloudKitHelper {
         return record.recordName
     }
     
-    public func downloadMessages(from: Date?,
-                          perRecord: @escaping (_ recordID: CKRecord.ID, _ recordResult: Result<CKRecord, Error>) -> Void) async -> Error? {
+    public func downloadMessages(from: Date?,perRecord: @escaping (_ recordID: CKRecord.ID, _ recordResult: Result<CKRecord, Error>) -> Void) async -> Error? {
         
         await withCheckedContinuation { continuation in
             let container = CKContainer.default()
@@ -83,8 +82,12 @@ struct CloudKitHelper {
                                                    options: options)
             let info = CKSubscription.NotificationInfo()
             info.soundName = "chan.aiff"
-            info.alertBody = "New message"
+            //info.alertBody = "New message"
+
+            info.alertLocalizationKey = "%1$@"
+            info.alertLocalizationArgs = ["text"]
             
+            info.shouldSendMutableContent = true
             subscription.notificationInfo = info
             
             return try await db.save(subscription)

@@ -11,7 +11,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UIApplication.shared.registerForRemoteNotifications()
+       UIApplication.shared.registerForRemoteNotifications()
         UNUserNotificationCenter.current().delegate = self
         return true
     }
@@ -23,11 +23,11 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
             completionHandler(.newData)
             print(notification)
         }
+        NotificationCenter.default.post(name: NSNotification.Name("Download"), object: self)
     }
     
     // Handle remote notification registration.
-    func application(_ application: UIApplication,
-                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    func application(_ application: UIApplication,didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenComponents = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let deviceTokenString = tokenComponents.joined()
         // Just checking if the token for the device has being created...
@@ -35,7 +35,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print(notification)
+        NotificationCenter.default.post(name: NSNotification.Name("Download"), object: self)
         completionHandler(.list)
     }
     
