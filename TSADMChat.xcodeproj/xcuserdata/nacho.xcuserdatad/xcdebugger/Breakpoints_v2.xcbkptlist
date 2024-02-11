@@ -55,100 +55,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3377098D-1938-4521-BEE3-1CA0D541F118"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TSADMChat/View/SplashScreen.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7B9850FE-4749-414A-A32D-5E65D77CEF45"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TSADMChat/View/SplashScreen.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "7B9850FE-4749-414A-A32D-5E65D77CEF45 - 96b5927b2dbbdbc6"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #2 () -&gt; () in TSADMChat.SplashScreen.body.getter : some"
-                  moduleName = "TSADMChat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "84">
-               </Location>
-               <Location
-                  uuid = "7B9850FE-4749-414A-A32D-5E65D77CEF45 - c92bf6af89caaa70"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) await resume partial function for closure #1 @Sendable () async -&gt; () in closure #2 () -&gt; () in TSADMChat.SplashScreen.body.getter : some"
-                  moduleName = "TSADMChat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "44">
-               </Location>
-               <Location
-                  uuid = "7B9850FE-4749-414A-A32D-5E65D77CEF45 - cc08cb30e46397c8"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(5) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #2 () -&gt; () in TSADMChat.SplashScreen.body.getter : some"
-                  moduleName = "TSADMChat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "128">
-               </Location>
-               <Location
-                  uuid = "7B9850FE-4749-414A-A32D-5E65D77CEF45 - 2f1774471c905c6"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "implicit closure #2 (__C.CKRecordID, Swift.Result&lt;__C.CKRecord, Swift.Error&gt;) -&gt; () in implicit closure #1 (TSADMChat.SplashScreen) -&gt; (__C.CKRecordID, Swift.Result&lt;__C.CKRecord, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () async -&gt; () in closure #2 () -&gt; () in TSADMChat.SplashScreen.body.getter : some"
-                  moduleName = "TSADMChat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "84">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "D151264E-61B3-4E6B-8790-86B8C376180C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -191,22 +97,242 @@
                   endingLineNumber = "21"
                   offsetFromSymbolStart = "212">
                </Location>
+               <Location
+                  uuid = "D151264E-61B3-4E6B-8790-86B8C376180C - a54caabaca4f619c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TSADMChat.AppDelegate.application(_: __C.UIApplication, didReceiveRemoteNotification: Swift.Dictionary&lt;Swift.AnyHashable, Any&gt;, fetchCompletionHandler: (__C.UIBackgroundFetchResult) -&gt; ()) -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/AppDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "D151264E-61B3-4E6B-8790-86B8C376180C - a54caabaca4f619c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TSADMChat.AppDelegate.application(_: __C.UIApplication, didReceiveRemoteNotification: Swift.Dictionary&lt;Swift.AnyHashable, Any&gt;, fetchCompletionHandler: (__C.UIBackgroundFetchResult) -&gt; ()) -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/AppDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "188">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "24A5191A-184F-4555-8942-E6DBDF8C4DFA"
+            uuid = "ED908548-919B-4A64-A4DC-5E830D26B0FB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TSADMChat/AppDelegate.swift"
+            filePath = "TSADMChat/View/ChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "application(_:didReceiveRemoteNotification:fetchCompletionHandler:)"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "initialize()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "ED908548-919B-4A64-A4DC-5E830D26B0FB - ec3b5b412547e4d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #1 @Swift.MainActor () -&gt; () in closure #1 @Sendable (Foundation.Notification) -&gt; () in TSADMChat.ChatView.initialize() -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/ChatView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119"
+                  offsetFromSymbolStart = "124">
+               </Location>
+               <Location
+                  uuid = "ED908548-919B-4A64-A4DC-5E830D26B0FB - 8f5c13bee302a9b2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for closure #1 @Sendable () async -&gt; () in closure #1 @Swift.MainActor () -&gt; () in closure #1 @Sendable (Foundation.Notification) -&gt; () in TSADMChat.ChatView.initialize() -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/ChatView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "ED908548-919B-4A64-A4DC-5E830D26B0FB - fbb5bcce4e9ea0de"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #1 @Swift.MainActor () -&gt; () in closure #1 @Sendable (Foundation.Notification) -&gt; () in TSADMChat.ChatView.initialize() -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/ChatView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  uuid = "ED908548-919B-4A64-A4DC-5E830D26B0FB - 76f26c7e5e5458b1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "implicit closure #2 (__C.CKRecordID, Swift.Result&lt;__C.CKRecord, Swift.Error&gt;) -&gt; () in implicit closure #1 (TSADMChat.ChatView) -&gt; (__C.CKRecordID, Swift.Result&lt;__C.CKRecord, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () async -&gt; () in closure #1 @Swift.MainActor () -&gt; () in closure #1 @Sendable (Foundation.Notification) -&gt; () in TSADMChat.ChatView.initialize() -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/ChatView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119"
+                  offsetFromSymbolStart = "84">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A925359D-1E2D-4091-BD01-526079F56634"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TSADMChat/View/SplashScreen.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "loadingData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4CFA08E8-86D5-4E56-B66D-40693B5DBE28"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TSADMChat/View/SplashScreen.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "loadingData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4CFA08E8-86D5-4E56-B66D-40693B5DBE28 - af6272a22ccd6948"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in TSADMChat.SplashScreen.loadingData() -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/SplashScreen.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "72"
+                  endingLineNumber = "72"
+                  offsetFromSymbolStart = "120">
+               </Location>
+               <Location
+                  uuid = "4CFA08E8-86D5-4E56-B66D-40693B5DBE28 - af6272a22ccd6948"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in TSADMChat.SplashScreen.loadingData() -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/SplashScreen.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "72"
+                  endingLineNumber = "72"
+                  offsetFromSymbolStart = "108">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "266F5081-2F62-414E-8BFE-7C79E394D399"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TSADMChat/View/SplashScreen.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "loadingData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "266F5081-2F62-414E-8BFE-7C79E394D399 - 5f70c77639882b52"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TSADMChat.SplashScreen.loadingData() -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/SplashScreen.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "1484">
+               </Location>
+               <Location
+                  uuid = "266F5081-2F62-414E-8BFE-7C79E394D399 - 5f70c77639882b52"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TSADMChat.SplashScreen.loadingData() -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/workspace/TSADMChat/TSADMChat/View/SplashScreen.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "1780">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "80519D0A-46E4-48BF-99EF-6F889107BAE1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TSADMChat/View/SplashScreen.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "loadingData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

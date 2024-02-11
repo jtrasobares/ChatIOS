@@ -5,9 +5,9 @@
 //  Created by Daniel Muñoz on 5/2/24.
 //
  
-import Foundation
 import SwiftUI
 import PhotosUI
+import LocalAuthentication
  
 struct LoginView : View {
     //It'll have a username and an image
@@ -18,9 +18,10 @@ struct LoginView : View {
     @State private var showChangeImage = false
     @State private var showImagePopover = false
     @State private var showCameraPop = false
+    @State private var securityEnable = false
     @State var type: UIImagePickerController.SourceType = .photoLibrary
     
-    @Binding var isLogged: Bool
+    @Binding var state: StateViewApp
  
     @Environment(\.managedObjectContext) var context
     
@@ -28,7 +29,8 @@ struct LoginView : View {
     func loginNewUsername() {
         UserDefaults.standard.set(username, forKey: "username")
         UserDefaults.standard.set(avatarImageData, forKey: "avatar")
-        isLogged = true
+        UserDefaults.standard.set(securityEnable, forKey: "security")
+        state = .loading
     }
     
     var body: some View {
@@ -41,6 +43,13 @@ struct LoginView : View {
                         .padding()
                         .background(Color(.white))
                         .cornerRadius(10)
+                        .foregroundColor(.black)
+                    Toggle(isOn: $securityEnable) {
+                            Text("Security in the app")
+                    }.onTapGesture {
+
+                        
+                    }
                                     
                     Button {
                         loginNewUsername()
@@ -52,15 +61,13 @@ struct LoginView : View {
                                 .padding(.vertical, 10)
                                 .font(.system(size: 14, weight: .semibold))
                             Spacer()
-                        }.background(Color.blue)
-                         .cornerRadius(10)
-                        
+                        }
                     }
+                    .background(Color.blue)
+                    .cornerRadius(10)
                 }.padding()
             }
             .navigationTitle("Create Account")
-            .background(Color(.init(white: 0, alpha: 0.05))
-                            .ignoresSafeArea())
         }
     }
     
@@ -153,6 +160,6 @@ struct LoginView : View {
 //Preview
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(isLogged: .constant(false))
+        LoginView(state: .constant(StateViewApp.registering))
     }
 }

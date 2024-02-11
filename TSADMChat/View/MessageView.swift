@@ -13,10 +13,12 @@ struct MessageView: View{
     var body: some View{
         
         if(message.user == "__defaultOwner__"){
+            var username = UserDefaults.standard.string(forKey: "username") ?? "User"
+            
             HStack(alignment: .bottom) {
                 Spacer()
                 VStack(alignment: .leading){
-                    Text(message.user!)
+                    Text(username)
                         .padding(.top, 4)
                         .padding(.leading,12)
                         .padding(.trailing, 12)

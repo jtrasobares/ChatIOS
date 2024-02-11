@@ -60,6 +60,27 @@ struct CloudKitHelper {
         }
     }
     
+    /*public func downloadMessages(from: Date?) async -> [Message] {
+           var messages = [Message]()
+           
+           await downloadMessages(from: from) { recordID, recordResult in
+               switch (recordResult) {
+               case .success(let record):
+                   let user = record.creatorUserRecordID?.recordName
+                   if let text = record["text"] as? String{
+                       messages.append(
+                        Message(id:recordID.recordName,user: user,text:text)
+                       )
+                   }
+               case .failure(let error):
+                   print("Error retrieving data: \(error)")
+               }
+           }
+           
+           return messages
+       }*/
+    
+    
     public func sendMessage(_ text: String) async throws {
         let message = CKRecord(recordType: "Message")
         message["text"] = text as NSString

@@ -11,11 +11,17 @@ import SwiftUI
 import CloudKit
 import SwiftData
 
-struct ContentView: View {
+
+struct ChatView: View {
     @Environment(\.modelContext) var modelContext
+    @Environment(\.scenePhase) var scenePhase
     @State private var message: String = ""
     @Query var messages: [Message]
-    @State var date: Date?
+    @State var loading: Bool = true
+    
+    @Binding var state: StateViewApp
+    
+    
     
     var body: some View {
         NavigationStack{
@@ -34,6 +40,8 @@ struct ContentView: View {
                             proxy.scrollTo(messages.last, anchor: .bottom)
                         }
                     }
+                    
+                    
                     // text and send button
                     HStack {
                         Button {
@@ -83,7 +91,17 @@ struct ContentView: View {
                     Image(systemName: "gearshape")
                 }
             }
+        }.onChange(of: scenePhase) {
+            if scenePhase == .active{
+                if loading{
+                    loading = false
+                }
+                else{
+                    state = .loading
+                }
+            }
         }
+        
         
     }
     
@@ -102,20 +120,14 @@ struct ContentView: View {
     }
     
     public func initialize(){
-        Task{
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("Download"), object: nil, queue: .main, using: { notification in
-                DispatchQueue.main.asyncAfter(deadline: .now()+0.5){
-                    Task{
-                        date = UserDefaults.standard.object(forKey: "date") as! Date?
-                        await CloudKitHelper().downloadMessages(from: date, perRecord: updateMessages)
-                        UserDefaults.standard.set(Date.now, forKey: "date")
-                    }
-                    
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("Download"), object: nil, queue: .main, using: { notification in
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.5){
+                Task{
+                    await CloudKitHelper().downloadMessages(from: UserDefaults.standard.object(forKey: "date") as! Date?, perRecord: updateMessages)
+                    UserDefaults.standard.set(Date.now, forKey: "date")
                 }
-                
-            })
-            
-        }
+            }
+        })
         
     }
     
@@ -130,13 +142,11 @@ struct ContentView: View {
             }catch{
                 print(error.localizedDescription)
             }
-            
             UserDefaults.standard.set(Date.now, forKey: "date")
         case .failure(let error):
             // Handle the error
             print("Error for Record ID \(recordID): \(error.localizedDescription)")
         }
     }
-    
     
 }

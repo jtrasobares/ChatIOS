@@ -5,21 +5,17 @@
 //  Created by Daniel Muñoz on 6/2/24.
 //
 
-import Foundation
 import SwiftUI
 import PhotosUI
 
 struct SettingsView : View {
     @Binding var username: String
-    @State private var avatarItem: PhotosPickerItem?
     @Binding var avatarImageData: Data?
+    @State private var avatarItem: PhotosPickerItem?
     @State private var showChangeImage = false
     @State private var showImagePopover = false
     @State private var showCameraPop = false
     @State var type: UIImagePickerController.SourceType = .photoLibrary
-    
-    
-    @Environment(\.managedObjectContext) var context
     
     func editUsername() {
         UserDefaults.standard.set(username, forKey: "username")
