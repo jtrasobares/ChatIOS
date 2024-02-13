@@ -50,8 +50,12 @@ struct ChatView: View {
                         } label:{
                             Image(systemName: "plus.circle")
                         }
+                        .buttonStyle(.borderless)
+                        
+                        
+                        
                         TextField("Send a message", text: $message)
-                            .padding(.vertical, 4)
+                            .padding(.vertical, 2)
                             .padding(.horizontal, 8)
                             .overlay(
                                     RoundedRectangle(cornerRadius: 14)
@@ -73,6 +77,7 @@ struct ChatView: View {
                     }
                     .padding()
                     .frame(maxWidth: .infinity)
+                    .buttonStyle(.borderless)
                     
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
