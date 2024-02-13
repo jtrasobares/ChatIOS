@@ -17,6 +17,7 @@ struct ChatView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var message: String = ""
     @Query var messages: [Message]
+    @Query var users: [User]
     @State var loading: Bool = true
     
     @Binding var state: StateViewApp
@@ -106,15 +107,18 @@ struct ChatView: View {
     }
     
     public func sendAndShowMessage(text:String){
-        Task{
-            do{
+        do{
+            Task{
                 try await CloudKitHelper().sendMessage(text)
-                modelContext.insert(Message(id:"Local",user:"__defaultOwner__",text: message))
                 UserDefaults.standard.set(Date.now, forKey: "date")
                 message = ""
-            }catch let error{
-                print(error.localizedDescription)
             }
+            if let user = try users.filter(#Predicate{ user in user.id == "__defaultOwner__"}).first{
+                    modelContext.insert(Message(id:"Local",user:user,text: message))
+            }
+            
+        }catch{
+            print(error)
         }
         
     }
@@ -123,7 +127,26 @@ struct ChatView: View {
         NotificationCenter.default.addObserver(forName: NSNotification.Name("Download"), object: nil, queue: .main, using: { notification in
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5){
                 Task{
-                    await CloudKitHelper().downloadMessages(from: UserDefaults.standard.object(forKey: "date") as! Date?, perRecord: updateMessages)
+                    let result = await CloudKitHelper().downloadMessages(from: UserDefaults.standard.object(forKey: "date") as! Date?,usersSaved: users)
+                    let newMessagesList = result.0
+                    let newUsersList = result.1
+                    try modelContext.transaction {
+                        newMessagesList.forEach{ message in
+                            modelContext.insert(message)
+                        }
+                    }
+                    try modelContext.transaction {
+                        newUsersList.forEach{ newUser in
+                            let idNewUser: String = newUser.id!
+                            do{
+                                if try users.filter(#Predicate{ user in user.id == idNewUser}).isEmpty{
+                                    modelContext.insert(newUser)
+                                }
+                            }catch{
+                                print(error)
+                            }
+                        }
+                    }
                     UserDefaults.standard.set(Date.now, forKey: "date")
                 }
             }
@@ -131,22 +154,5 @@ struct ChatView: View {
         
     }
     
-    public func updateMessages(_ recordID: CKRecord.ID, _ recordResult: Result<CKRecord, Error>){
-        switch recordResult {
-        case .success(let record):
-            let text = record["text"]! as String
-            let user = record.creatorUserRecordID!.recordName
-            do{
-                modelContext.insert(Message(id:recordID.recordName,user: user,text:text))
-                try modelContext.save()
-            }catch{
-                print(error.localizedDescription)
-            }
-            UserDefaults.standard.set(Date.now, forKey: "date")
-        case .failure(let error):
-            // Handle the error
-            print("Error for Record ID \(recordID): \(error.localizedDescription)")
-        }
-    }
     
 }

@@ -60,26 +60,107 @@ struct CloudKitHelper {
         }
     }
     
-    /*public func downloadMessages(from: Date?) async -> [Message] {
-           var messages = [Message]()
+    public func downloadMessages(from: Date?, usersSaved: [User]) async -> ([Message],[User]) {
+        var ckListmessages = [CKMessage]()
+        var messages = [Message]()
+        var users: [User] = []
            
-           await downloadMessages(from: from) { recordID, recordResult in
-               switch (recordResult) {
-               case .success(let record):
-                   let user = record.creatorUserRecordID?.recordName
-                   if let text = record["text"] as? String{
-                       messages.append(
-                        Message(id:recordID.recordName,user: user,text:text)
-                       )
-                   }
-               case .failure(let error):
-                   print("Error retrieving data: \(error)")
+        await downloadMessages(from: from) { recordID, recordResult in
+           
+           switch (recordResult) {
+           case .success(let record):
+               let user = record.creatorUserRecordID?.recordName
+               let text = record["text"] as! String? ?? ""
+               var image: Data? = nil
+               if record["image"] != nil{
+                   image = (record["image"] as! CKAsset).toData()
                }
+               ckListmessages.append(
+                CKMessage(id:recordID.recordName,userID: user,text:text,image:image)
+               )
+               
+           case .failure(let error):
+               print("Error retrieving data: \(error)")
            }
-           
-           return messages
-       }*/
+        }
+
+        for ckMessage in ckListmessages {
+            do{
+                let idUser = ckMessage.userID!
+                if ckMessage.image != nil{
+                    print("Nacho es el mejor")
+                }
+                if let user = try users.filter(#Predicate{ user in user.id == idUser}).first{
+                    messages.append(Message(id:ckMessage.id,user: user,text: ckMessage.text,image: ckMessage.image))
+                }else{
+                    let result = await getUser(recordID: idUser)
+                    switch (result) {
+                    case .success(let newUser):
+                        if let userSaved = try users.filter(#Predicate{ user in user.id == idUser}).first{
+                            if userSaved.name != newUser.name{
+                                userSaved.name = newUser.name
+                            }
+                            if userSaved.image != newUser.image{
+                                userSaved.image = newUser.image
+                                userSaved.imageUI = nil
+                            }
+                            users.append(userSaved)
+                            messages.append(Message(id:ckMessage.id,user: userSaved,text: ckMessage.text,image: ckMessage.image))
+                        }
+                        else{
+                            users.append(newUser)
+                            messages.append(Message(id:ckMessage.id,user: newUser,text: ckMessage.text,image: ckMessage.image))
+                        }
+                        
+                    case .failure(let error):
+                        print("Error retrieving data: \(error)")
+                        
+                    }
+                }
+            }catch{
+                print(error)
+            }
+        }
+
+        return (messages,users)
+       }
     
+    
+    public func updateUser(newName: String, image: CKAsset?) async throws -> Result<Void, Error> {
+            let recordID = try await myUserRecordID()
+            let container = CKContainer.default()
+            let db = container.publicCloudDatabase
+
+            do {
+                let record = try await db.record(for: CKRecord.ID(recordName: recordID))
+                print(record)
+                record["name"] = newName  // Assign the new name directly
+                if image != nil{
+                    record["thumbnail"] = image
+                }
+                try await db.save(record)
+                return .success(())
+            } catch {
+                return .failure(error)
+            }
+    }
+    
+    public func getUser(recordID: String) async -> Result<User, Error> {
+            let container = CKContainer.default()
+            let db = container.publicCloudDatabase
+            do {
+                let record = try await db.record(for: CKRecord.ID(recordName: recordID))
+                let name = record["name"] as! String? ?? ""
+                var image: Data? = nil
+                if record["thumbnail"] != nil{
+                    image = (record["thumbnail"] as! CKAsset).toData()
+                }
+                let user = User(id: record.creatorUserRecordID?.recordName, name: name, image: image)
+                return .success(user)
+            } catch {
+                return .failure(error)
+            }
+    }
     
     public func sendMessage(_ text: String) async throws {
         let message = CKRecord(recordType: "Message")

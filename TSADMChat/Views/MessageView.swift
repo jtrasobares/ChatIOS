@@ -6,19 +6,18 @@
 //
 
 import SwiftUI
+import PhotosUI
+import SwiftData
 
 struct MessageView: View{
     let message: Message
     
     var body: some View{
-        
-        if(message.user == "__defaultOwner__"){
-            var username = UserDefaults.standard.string(forKey: "username") ?? "User"
-            
+        if(message.user!.id == "__defaultOwner__"){
             HStack(alignment: .bottom) {
                 Spacer()
                 VStack(alignment: .leading){
-                    Text(username)
+                    Text(message.user!.name!)
                         .padding(.top, 4)
                         .padding(.leading,12)
                         .padding(.trailing, 12)
@@ -26,6 +25,15 @@ struct MessageView: View{
                         .bold()
                         .font(.footnote)
                         .foregroundColor(.white)
+                    if(message.image != nil){
+                        Image(uiImage: message.getImageUI()!)
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(10)
+                            .padding(.horizontal, 8)
+                            
+                        
+                    }
                     Text(message.text!)
                         .padding(.top,0)
                         .padding(.bottom,8)
@@ -37,11 +45,20 @@ struct MessageView: View{
                 .background(Color(UIColor.systemBlue))
                 .clipShape(BubbleShape(myMessage: true))
                 .padding(.bottom,15)
+                if(message.user!.image != nil){
+                    Image(uiImage:message.user!.getImageUI()!)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 30, height: 30, alignment: .bottom)
+                                        .cornerRadius(20)
+                }else{
+                    Image(systemName: "person.circle.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 30, height: 30, alignment: .bottom)
+                                        .cornerRadius(20)
+                }
                 
-                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .frame(width: 30, height: 30, alignment: .bottom)
-                                    .cornerRadius(20)
                                 
                 
             }
@@ -52,13 +69,21 @@ struct MessageView: View{
         }
         else{
             HStack(alignment: .bottom)  {
-                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .frame(width: 30, height: 30, alignment: .bottom)
-                                    .cornerRadius(20)
+                if(message.user!.image != nil){
+                    Image(uiImage:message.user!.getImageUI()!)
+                                        .resizable()
+                                        .frame(width: 30, height: 30, alignment: .bottom)
+                                        .cornerRadius(20)
+                                        
+                }else{
+                    Image(systemName: "person.circle.fill")
+                                        .resizable()
+                                        .frame(width: 30, height: 30, alignment: .bottom)
+                                        .cornerRadius(20)
+                }
                 VStack(alignment: .leading){
                     
-                    Text(message.user!)
+                    Text(message.user!.name!)
                         .padding(.top, 4)
                         .padding(.leading,12)
                         .padding(.trailing, 12)
@@ -66,6 +91,14 @@ struct MessageView: View{
                         .font(.footnote)
                         .bold()
                         .foregroundColor(.white)
+                    if(message.image != nil){
+                        Image(uiImage: message.getImageUI()!)
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(10)
+                            .padding(.horizontal, 8)
+                        
+                    }
                     Text(message.text!)
                         .padding(.top,0)
                         .padding(.bottom,8)
@@ -80,9 +113,10 @@ struct MessageView: View{
             }
             .padding(.trailing, 55)
         }
-        
 
     }
+    
+    
 }
 
 struct BubbleShape: Shape {
@@ -124,6 +158,6 @@ struct BubbleShape: Shape {
 }
 
 
-#Preview{
+/*#Preview{
     MessageView(message: Message(id: "1", user: "Pedro", text: "Hola Soy pedro"))
-}
+}*/

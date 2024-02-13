@@ -5,7 +5,6 @@
 //  Created by Daniel Muñoz on 6/2/24.
 //
 
-import Foundation
 import SwiftUI
 
 struct CameraPickerView: UIViewControllerRepresentable {

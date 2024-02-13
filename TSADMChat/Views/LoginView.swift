@@ -6,12 +6,16 @@
 //
  
 import SwiftUI
+import SwiftData
 import PhotosUI
 import LocalAuthentication
  
 struct LoginView : View {
-    //It'll have a username and an image
-    //Both will be requested if they're not saved "isUserStored()"
+    @Binding var state: StateViewApp
+    
+    @Environment(\.modelContext) var modelContext
+    @Query(filter: #Predicate<User>{ user in user.id == "__defaultOwner__"}) var users: [User]
+    @State private var actualUser: User? = nil
     @State private var username: String = ""
     @State private var avatarItem: PhotosPickerItem?
     @State private var avatarImageData: Data? = nil
@@ -20,17 +24,23 @@ struct LoginView : View {
     @State private var showCameraPop = false
     @State private var securityEnable = false
     @State var type: UIImagePickerController.SourceType = .photoLibrary
-    
-    @Binding var state: StateViewApp
- 
-    @Environment(\.managedObjectContext) var context
-    
-    //TODO: Log the user properly
+
     func loginNewUsername() {
         UserDefaults.standard.set(username, forKey: "username")
-        UserDefaults.standard.set(avatarImageData, forKey: "avatar")
         UserDefaults.standard.set(securityEnable, forKey: "security")
-        state = .loading
+        Task{
+            actualUser!.name = username
+            actualUser!.image = avatarImageData
+            modelContext.insert(actualUser!)
+            do{
+                try await CloudKitHelper().updateUser(newName:username,image:avatarImageData?.toCKAsset())
+                state = .loading
+            }catch{
+                print(error)
+            }
+            
+        }
+        
     }
     
     var body: some View {
@@ -46,9 +56,6 @@ struct LoginView : View {
                         .foregroundColor(.black)
                     Toggle(isOn: $securityEnable) {
                             Text("Security in the app")
-                    }.onTapGesture {
-
-                        
                     }
                                     
                     Button {
@@ -66,6 +73,22 @@ struct LoginView : View {
                     .background(Color.blue)
                     .cornerRadius(10)
                 }.padding()
+            }
+            .onAppear{
+                if let userSelected = users.first{
+                    actualUser = userSelected
+                    
+                }
+                else{
+                    actualUser = User(id:"__defaultOwner__",name:"")
+                }
+                username = actualUser!.name!
+                if actualUser!.image != nil{
+                    avatarImageData = actualUser!.image
+                }
+                
+                
+                
             }
             .navigationTitle("Create Account")
         }

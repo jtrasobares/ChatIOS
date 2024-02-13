@@ -15,6 +15,7 @@
 		02F95A5C2B0B4FAD00F4D5C0 /* TSADMChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F95A5B2B0B4FAD00F4D5C0 /* TSADMChatTests.swift */; };
 		02F95A662B0B4FAD00F4D5C0 /* TSADMChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F95A652B0B4FAD00F4D5C0 /* TSADMChatUITests.swift */; };
 		02F95A682B0B4FAD00F4D5C0 /* TSADMChatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F95A672B0B4FAD00F4D5C0 /* TSADMChatUITestsLaunchTests.swift */; };
+		6618CD372B7C337000F229BF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6618CD362B7C336F00F229BF /* User.swift */; };
 		668F29822B6EB96200B9E51E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F29812B6EB96200B9E51E /* MessageView.swift */; };
 		668F29842B716EAD00B9E51E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F29832B716EAD00B9E51E /* LoginView.swift */; };
 		66AE2C052B6BA03E00641ACA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE2C042B6BA03D00641ACA /* AppDelegate.swift */; };
@@ -59,6 +60,7 @@
 		02F95A612B0B4FAD00F4D5C0 /* TSADMChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TSADMChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		02F95A652B0B4FAD00F4D5C0 /* TSADMChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSADMChatUITests.swift; sourceTree = "<group>"; };
 		02F95A672B0B4FAD00F4D5C0 /* TSADMChatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSADMChatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6618CD362B7C336F00F229BF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		668F29812B6EB96200B9E51E /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		668F29832B716EAD00B9E51E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		66AE2C042B6BA03D00641ACA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				023FB64D2B0E9B4100FA2FAE /* CloudKitHelper.swift */,
+				6618CD362B7C336F00F229BF /* User.swift */,
 				66EAE5612B48B23C00C595A3 /* Message.swift */,
 				66D7C3B32B793F2700FE0ACA /* StateViewApp.swift */,
 			);
@@ -329,6 +332,7 @@
 				02F95A492B0B4FAC00F4D5C0 /* ChatView.swift in Sources */,
 				6E9BD2362B73B9DE0076A97D /* Utils.swift in Sources */,
 				6EAEBCCE2B71911F00407F79 /* ViewCoordinator.swift in Sources */,
+				6618CD372B7C337000F229BF /* User.swift in Sources */,
 				66EAE5622B48B23C00C595A3 /* Message.swift in Sources */,
 				02F95A472B0B4FAC00F4D5C0 /* TSADMChatApp.swift in Sources */,
 				6EAEBCD12B723D1900407F79 /* ImagePicker.swift in Sources */,

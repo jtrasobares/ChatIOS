@@ -13,7 +13,7 @@ struct ViewCoordinator: View {
     var body: some View {
         switch state{
         case .loading:
-            SplashScreen(state: $state)
+            SplashView(state: $state)
         case .registering:
             LoginView(state: $state)
         case .working:
