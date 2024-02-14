@@ -101,7 +101,7 @@ struct SettingsView : View {
         }
         .photosPicker(isPresented: $showChangeImage, selection: $avatarItem, matching: .images, photoLibrary: .shared())
         .popover(isPresented: $showImagePopover) {
-            imagePopupView(imageData: avatarImageData!)
+            imagePopupView(imageData: avatarImageData!, deleteDelegate: nil)
                 .onTapGesture {
                 showImagePopover.toggle()
             }

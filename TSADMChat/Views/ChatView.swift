@@ -24,6 +24,7 @@ struct ChatView: View {
     @State var isAtachmentMenuOpen = false
     @State var showPicNewImage = false
     @State var showPicFromCamera = false
+    @State var showImagePopover = false
     @State private var avatarItem: PhotosPickerItem?
     
     @Binding var state: StateViewApp
@@ -51,45 +52,51 @@ struct ChatView: View {
                     
                     // text and send button
                     HStack {
-                        ZStack{
-                            Button {
-                                isAtachmentMenuOpen.toggle()
-                            } label:{
-                                Image(systemName: "plus.circle")
-                            }
-                            .buttonStyle(.borderless)
-                            
-                            Menu {
-                                Button {
-                                    //Change the image
-                                    showPicNewImage.toggle()
-                                } label: {
-                                    Label("Change Image", systemImage: "image")
-                                }
-                                Button {
-                                    showPicFromCamera.toggle()
-                                } label: {
-                                    Label("Take from camera", systemImage: "camera")
-                                }
-                            } label: {
-                                
-                            }
-                            .photosPicker(isPresented: $showPicNewImage, selection: $avatarItem, matching: .images, photoLibrary: .shared())
-                            .fullScreenCover(isPresented: $showPicFromCamera) {
-                                CameraPickerView() { image in
-                                    attachement = image.pngData()
+                        ZStack (alignment: .center, content: {
+                            attachmentMenu()
+                        })
+                        .onChange(of: avatarItem) {
+                            Task {
+                                if let loaded = try? await avatarItem?.loadTransferable(type: Data.self) {
+                                    attachement = loaded
+                                } else {
+                                    attachement = nil
+                                    print("Error loading image")
                                 }
                             }
                         }
                         
                         
-                        TextField("Send a message", text: $message)
-                            .padding(.vertical, 2)
-                            .padding(.horizontal, 8)
+                        // RoundedRectangle
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color(.systemGray5))
+                            .frame(height: 40)
                             .overlay(
-                                    RoundedRectangle(cornerRadius: 14)
-                                        .stroke(Color.blue, lineWidth: 1)
-                                )
+                                HStack {
+                                    if attachement != nil {
+                                        // Miniature of the image (attachment)
+                                        Image(systemName: "photo.fill")
+                                            .foregroundColor(.blue)
+                                            .padding(.leading, 10)
+                                            .onTapGesture {
+                                                showImagePopover.toggle()
+                                            }
+                                            .popover(isPresented: $showImagePopover, arrowEdge: .bottom, content: {
+                                                imagePopupView(imageData: attachement!,
+                                                               deleteDelegate: {
+                                                                attachement = nil
+                                                                avatarItem = nil
+                                                               },
+                                                               hideDelegate: {
+                                                                    showImagePopover.toggle()
+                                                               })
+                                            })
+                                    }
+                                    TextField("Send a message", text: $message)
+                                        .padding(.vertical, 2)
+                                        .padding(.horizontal, 8)
+                                }
+                            )
                         
                             
                         Button {
@@ -111,7 +118,6 @@ struct ChatView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .onAppear {
-                    
                     initialize()
                     withAnimation {
                         proxy.scrollTo(messages.last, anchor: .bottom)
@@ -139,6 +145,38 @@ struct ChatView: View {
                 }
             }
         }
+    }
+    
+    func attachmentMenu() -> some View {
+        return Menu {
+            Button {
+                showPicFromCamera.toggle()
+            } label: {
+                Label("Take from camera", systemImage: "camera")
+            }
+            Button {
+                //Change the image
+                showPicNewImage.toggle()
+            } label: {
+                Label("Attach Image", systemImage: "pencil")
+            }
+        } label: {
+            Button {
+                isAtachmentMenuOpen.toggle()
+            } label:{
+                Image(systemName: "plus.circle.fill")
+            }
+            .buttonStyle(.borderless)
+        }
+        .photosPicker(isPresented: $showPicNewImage, selection: $avatarItem, matching: .images, photoLibrary: .shared())
+        .fullScreenCover(isPresented: $showPicFromCamera) {
+            CameraPickerView() { image in
+                //UIImage to Data
+                attachement = image.pngData()
+            }
+        }
+        .padding(.top)
+        
     }
     
     public func sendAndShowMessage(text:String, attachment: Data? = nil){

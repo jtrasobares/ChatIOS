@@ -171,7 +171,9 @@ struct LoginView : View {
         }
         .photosPicker(isPresented: $showChangeImage, selection: $avatarItem, matching: .images, photoLibrary: .shared())
         .popover(isPresented: $showImagePopover) {
-            imagePopupView(imageData: avatarImageData!)
+            imagePopupView(imageData: avatarImageData!, hideDelegate: {
+                showImagePopover.toggle()
+           })
                 .onTapGesture {
                 showImagePopover.toggle()
             }
