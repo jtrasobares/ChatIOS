@@ -26,7 +26,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         if let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) {
             completionHandler(.newData)
         }
-        NotificationCenter.default.post(name: NSNotification.Name("Download"), object: self)
     }
     
     // Handle remote notification registration.
