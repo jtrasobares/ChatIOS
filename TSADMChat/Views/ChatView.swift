@@ -88,7 +88,7 @@ struct ChatView: View {
             messageBar()
             
             Button {
-                guard messageText.count > 0 else {
+                guard messageText.count > 0 || attachement != nil  else {
                     return
                 }
                 sendAndShowMessage(text:messageText, attachment: attachement)
@@ -96,12 +96,12 @@ struct ChatView: View {
             } label: {
                 //Paper plane icon that gets gray or blue depending on the message
                 Image(systemName: "paperplane")
-                    .foregroundColor(messageText.count > 0 ? .blue : .gray)
+                    .foregroundColor(messageText.count > 0 || attachement != nil ? .blue : .gray)
                     .scaledToFit()
                     .frame(width: 30, height: 30)
             }
             .padding(.leading, 10)
-            .disabled(messageText.count == 0)
+            .disabled(messageText.count == 0 && attachement == nil)
         }
         .padding(.horizontal)
         .padding(.top, 10)
@@ -136,7 +136,7 @@ struct ChatView: View {
                                 })
                             })
                     }
-                    TextField("Send a message", text: $messageText)
+                    TextField("Send a message", text: $messageText, axis: .vertical)
                         .padding(.horizontal, 8)
                 }
             )
@@ -178,18 +178,23 @@ struct ChatView: View {
     }
     
     public func sendAndShowMessage(text:String, attachment: Data? = nil){
-        do{
+        
             Task{
-                try await CloudKitHelper().sendMessage(text, attachment)
-                UserDefaults.standard.set(Date.now, forKey: "date")
+                do{
+                    let record = try await CloudKitHelper().sendMessage(text, attachment)
+                    UserDefaults.standard.set(Date.now, forKey: "date")
+                    if let user = try users.filter(#Predicate{ user in user.id == "__defaultOwner__"}).first{
+                        modelContext.insert(Message(id:record.recordID.recordName,date: record.creationDate!,text: text, image: attachment, user: user))
+                    }
+                    
+                }catch{
+                    print(error)
+                }
+                
             }
-            if let user = try users.filter(#Predicate{ user in user.id == "__defaultOwner__"}).first{
-                modelContext.insert(Message(id:"Local",date: Date.now,text: messageText, image: attachment, user: user))
-            }
-            messageText = ""
-        }catch{
-            print(error)
-        }
+        messageText = ""
+        attachement = nil
+        avatarItem = nil
     }
     
     public func initialize(){

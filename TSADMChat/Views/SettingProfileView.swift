@@ -114,6 +114,13 @@ struct LoginView : View {
                 if actualUser!.image != nil{
                     avatarImageData = actualUser!.image
                 }
+                let security: Bool? = UserDefaults.standard.bool(forKey: "security")
+                if security != nil{
+                    securityEnable = security!
+                }
+                else{
+                    securityEnable = false
+                }
                 
                 
                 

@@ -149,7 +149,7 @@ struct CloudKitHelper {
         }
     }
     
-    public func sendMessage(_ text: String, _ attachment: Data?) async throws {
+    public func sendMessage(_ text: String, _ attachment: Data?) async throws -> CKRecord {
         let message = CKRecord(recordType: "Message")
         message["text"] = text as NSString
         if (attachment != nil) {
@@ -157,7 +157,7 @@ struct CloudKitHelper {
         }
         let db = CKContainer.default().publicCloudDatabase
         //TODO: Return for the record id
-        try await db.save(message)
+        return try await db.save(message)
     }
     
     public func checkForSubscriptions() async throws -> CKSubscription? {
