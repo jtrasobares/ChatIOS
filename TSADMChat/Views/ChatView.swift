@@ -68,34 +68,11 @@ struct ChatView: View {
                         
                         
                         // RoundedRectangle
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color(.systemGray5))
-                            .frame(height: 40)
-                            .overlay(
-                                HStack {
-                                    if attachement != nil {
-                                        // Miniature of the image (attachment)
-                                        Image(systemName: "photo.fill")
-                                            .foregroundColor(.blue)
-                                            .padding(.leading, 10)
-                                            .onTapGesture {
-                                                showImagePopover.toggle()
-                                            }
-                                            .popover(isPresented: $showImagePopover, arrowEdge: .bottom, content: {
-                                                imagePopupView(imageData: attachement!,
-                                                               deleteDelegate: {
-                                                                attachement = nil
-                                                                avatarItem = nil
-                                                               },
-                                                               hideDelegate: {
-                                                                    showImagePopover.toggle()
-                                                               })
-                                            })
-                                    }
-                                    TextField("Send a message", text: $message)
-                                        .padding(.horizontal, 8)
-                                }
-                            )
+                        HStack {
+                            TextField("Send a message", text: $message)
+                                .padding(.vertical, 2)
+                                .padding(.horizontal, 8)
+                        }
                         
                         Button {
                             guard message.count > 0 else {
@@ -107,6 +84,8 @@ struct ChatView: View {
                             //Paper plane icon that gets gray or blue depending on the message
                             Image(systemName: "paperplane")
                                 .foregroundColor(message.count > 0 ? .blue : .gray)
+                                .scaledToFit()
+                                .frame(width: 30, height: 30)
                         }
                         .padding(.leading, 10)
                         .disabled(message.count == 0)
@@ -190,12 +169,12 @@ struct ChatView: View {
             Task{
                 try await CloudKitHelper().sendMessage(text, attachment)
                 UserDefaults.standard.set(Date.now, forKey: "date")
-                message = ""
+                
             }
             if let user = try users.filter(#Predicate{ user in user.id == "__defaultOwner__"}).first{
                 modelContext.insert(Message(id:"Local",date: Date.now,text: message, image: attachment, user: user))
             }
-            
+            message = ""
         }catch{
             print(error)
         }
