@@ -11,6 +11,7 @@ import SwiftData
 
 struct MessageView: View{
     let message: Message
+    @State var showProfile: Bool = false
     
     var body: some View{
         if(message.user!.id == "__defaultOwner__"){
@@ -50,11 +51,23 @@ struct MessageView: View{
                                         .resizable()
                                         .frame(width: 30, height: 30, alignment: .bottom)
                                         .cornerRadius(20)
+                                        .onTapGesture {
+                                            showProfile.toggle()
+                                        }
+                                        .sheet(isPresented: $showProfile){
+                                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
+                                        }
                 }else{
                     Image(systemName: "person.circle.fill")
                                         .resizable()
                                         .frame(width: 30, height: 30, alignment: .bottom)
                                         .cornerRadius(20)
+                                        .onTapGesture {
+                                            showProfile.toggle()
+                                        }
+                                        .sheet(isPresented: $showProfile){
+                                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
+                                        }
                 }
                 
                                 
@@ -72,12 +85,24 @@ struct MessageView: View{
                                         .resizable()
                                         .frame(width: 30, height: 30, alignment: .bottom)
                                         .cornerRadius(20)
+                                        .onTapGesture {
+                                            showProfile.toggle()
+                                        }
+                                        .sheet(isPresented: $showProfile){
+                                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
+                                        }
                                         
                 }else{
                     Image(systemName: "person.circle.fill")
                                         .resizable()
                                         .frame(width: 30, height: 30, alignment: .bottom)
                                         .cornerRadius(20)
+                                        .onTapGesture {
+                                            showProfile.toggle()
+                                        }
+                                        .sheet(isPresented: $showProfile){
+                                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
+                                        }
                 }
                 VStack(alignment: .leading){
                     

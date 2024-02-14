@@ -17,7 +17,7 @@ struct ChatView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var message: String = ""
     @State private var attachement: Data? = nil
-    @Query var messages: [Message]
+    @Query(sort: \Message.date, order: .forward, animation: .easeIn) var messages: [Message]
     @Query var users: [User]
     @State var loading: Bool = true
     
@@ -187,7 +187,7 @@ struct ChatView: View {
                 message = ""
             }
             if let user = try users.filter(#Predicate{ user in user.id == "__defaultOwner__"}).first{
-                modelContext.insert(Message(id:"Local",text: message, image: attachment, user: user))
+                modelContext.insert(Message(id:"Local",date: Date.now,text: message, image: attachment, user: user))
             }
             
         }catch{
@@ -224,7 +224,7 @@ struct ChatView: View {
                         newCKMessagesList.forEach{ ckMessage in
                             do{
                                 let idNewUser: String = ckMessage.userID!
-                                var message = Message(id: ckMessage.id,text: ckMessage.text, image: ckMessage.image)
+                                var message = Message(id: ckMessage.id,date: ckMessage.date,text: ckMessage.text, image: ckMessage.image)
                                 if let user = try users.filter(#Predicate{ user in user.id == idNewUser}).first{
                                     message.user = user
                                 }

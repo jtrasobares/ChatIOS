@@ -7,16 +7,18 @@
 
 import Foundation
 class CKMessage{
-    var id: String?
+    var id: String
     var userID: String?
     var text: String?
+    var date: Date
     var image: Data?
     
-    init(id: String? = nil, userID: String? = nil, text: String? = nil,image: Data? = nil) {
+    init(id: String,date: Date, userID: String? = nil, text: String? = nil,image: Data? = nil) {
         self.id = id
         self.userID = userID
         self.text = text
         self.image = image
+        self.date = date
     }
     
  }

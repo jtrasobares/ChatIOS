@@ -134,7 +134,7 @@ struct SplashView: View {
                     newCKMessagesList.forEach{ ckMessage in
                         do{
                             let idNewUser: String = ckMessage.userID!
-                            var message = Message(id: ckMessage.id,text: ckMessage.text, image: ckMessage.image)
+                            var message = Message(id: ckMessage.id,date: ckMessage.date,text: ckMessage.text, image: ckMessage.image)
                             if let user = try users.filter(#Predicate{ user in user.id == idNewUser}).first{
                                 message.user = user
                             }

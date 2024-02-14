@@ -69,13 +69,15 @@ struct CloudKitHelper {
            switch (recordResult) {
            case .success(let record):
                let user = record.creatorUserRecordID?.recordName
+               let date = record.creationDate!
                let text = record["text"] as! String? ?? ""
+               
                var image: Data? = nil
                if record["image"] != nil{
                    image = (record["image"] as! CKAsset).toData()
                }
                messages.append(
-                CKMessage(id:recordID.recordName,userID: user,text:text,image:image)
+                CKMessage(id:recordID.recordName,date:date,userID: user,text:text,image:image)
                )
                
            case .failure(let error):
