@@ -10,27 +10,28 @@ import SwiftData
 
 struct ListChatView: View {
 
-    @Query(sort: \Message.date, order: .forward, animation: .easeIn) var messages: [Message]
+    //@Query(sort: \Message.date, order: .forward, animation: .easeIn) var messages: [Message]
     
     var body: some View {
-        ScrollViewReader { proxy in
-            
-            List(messages, id: \.self) { message in
-                MessageView(message: message)
-                    .id(message)
-                    .listRowSeparator(.hidden)
-            }
-            .frame(maxWidth: .infinity)
-            .listStyle(.plain)
-            .onChange(of: messages) { oldValue, newValue in
-                guard oldValue.count < newValue.count else { return }
-                withAnimation {
-                    proxy.scrollTo(messages.last, anchor: .bottom)
+        QueryView(type: Message.self) { messages in
+            ScrollViewReader { proxy in
+                List(messages, id: \.self) { inputMessage in
+                    MessageView(message: inputMessage)
+                        .id(inputMessage)
+                        .listRowSeparator(.hidden)
                 }
-            }
-            .onAppear{
-                withAnimation {
-                    proxy.scrollTo(messages.last, anchor: .bottom)
+                .frame(maxWidth: .infinity)
+                .listStyle(.plain)
+                .onChange(of: messages) { oldValue, newValue in
+                    guard oldValue.count < newValue.count else { return }
+                    withAnimation {
+                        proxy.scrollTo(messages.last, anchor: .bottom)
+                    }
+                }
+                .onAppear{
+                    withAnimation {
+                        proxy.scrollTo(messages.last, anchor: .bottom)
+                    }
                 }
             }
         }
