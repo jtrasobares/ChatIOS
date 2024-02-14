@@ -12,6 +12,7 @@ import SwiftData
 struct MessageView: View{
     let message: Message
     @State var showProfile: Bool = false
+    @State var showImage: Bool = false
     
     var body: some View{
         if(message.user!.id == "__defaultOwner__"){
@@ -32,8 +33,16 @@ struct MessageView: View{
                             .cornerRadius(10)
                             .scaledToFit()
                             .padding(.horizontal, 8)
-                            
-                        
+                            .onTapGesture {
+                                showImage.toggle()
+                            }
+                            .sheet(isPresented: $showImage){
+                                imagePopupView(imageData: message.image!)
+                                    .presentationDragIndicator(.visible)
+                                    .onTapGesture {
+                                        showImage.toggle()
+                                    }
+                            }
                     }
                     Text(message.text!)
                         .padding(.top,0)
@@ -120,6 +129,16 @@ struct MessageView: View{
                             .scaledToFit()
                             .cornerRadius(10)
                             .padding(.horizontal, 8)
+                            .onTapGesture {
+                                showImage.toggle()
+                            }
+                            .sheet(isPresented: $showImage){
+                                imagePopupView(imageData: message.image!)
+                                    .presentationDragIndicator(.visible)
+                                    .onTapGesture {
+                                        showImage.toggle()
+                                    }
+                            }
                         
                     }
                     Text(message.text!)

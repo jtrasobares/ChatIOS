@@ -51,8 +51,8 @@ struct ChatView: View {
                     
                     
                     // text and send button
-                    HStack {
-                        ZStack (alignment: .center, content: {
+                    HStack(alignment: .center) {
+                        ZStack (content: {
                             attachmentMenu()
                         })
                         .onChange(of: avatarItem) {
@@ -93,12 +93,10 @@ struct ChatView: View {
                                             })
                                     }
                                     TextField("Send a message", text: $message)
-                                        .padding(.vertical, 2)
                                         .padding(.horizontal, 8)
                                 }
                             )
                         
-                            
                         Button {
                             guard message.count > 0 else {
                                 return
@@ -106,14 +104,19 @@ struct ChatView: View {
                             sendAndShowMessage(text:message, attachment: attachement)
                             
                         } label: {
-                            Image(systemName: "paperplane.fill")
+                            //Paper plane icon that gets gray or blue depending on the message
+                            Image(systemName: "paperplane")
+                                .foregroundColor(message.count > 0 ? .blue : .gray)
                         }
                         .padding(.leading, 10)
                         .disabled(message.count == 0)
                     }
-                    .padding()
+                    .padding(.horizontal)
+                    .padding(.top, 10)
+                    .padding(.bottom, 14)
                     .frame(maxWidth: .infinity)
                     .buttonStyle(.borderless)
+                    .background(Color(.systemGray6))
                     
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -165,6 +168,10 @@ struct ChatView: View {
                 isAtachmentMenuOpen.toggle()
             } label:{
                 Image(systemName: "plus.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.blue)
             }
             .buttonStyle(.borderless)
         }
@@ -175,8 +182,7 @@ struct ChatView: View {
                 attachement = image.pngData()
             }
         }
-        .padding(.top)
-        
+        .padding([.leading, .trailing], 5)
     }
     
     public func sendAndShowMessage(text:String, attachment: Data? = nil){
