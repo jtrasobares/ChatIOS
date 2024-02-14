@@ -13,7 +13,7 @@ struct ListChatView: View {
     //@Query(sort: \Message.date, order: .forward, animation: .easeIn) var messages: [Message]
     
     var body: some View {
-        QueryView(type: Message.self) { messages in
+        QueryView(for: Message.self, sort: [SortDescriptor(\Message.date, order: .forward)], content: { messages in
             ScrollViewReader { proxy in
                 List(messages, id: \.self) { inputMessage in
                     MessageView(message: inputMessage)
@@ -34,7 +34,7 @@ struct ListChatView: View {
                     }
                 }
             }
-        }
+        })
     }
 }
             
