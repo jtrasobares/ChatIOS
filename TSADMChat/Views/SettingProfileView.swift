@@ -167,6 +167,7 @@ struct LoginView : View {
                     .frame(width: 120, height: 120, alignment: .center)
                     .cornerRadius(50)
                     .padding()
+                    .background(Color.clear)
             }
         }
         .photosPicker(isPresented: $showChangeImage, selection: $avatarItem, matching: .images, photoLibrary: .shared())
