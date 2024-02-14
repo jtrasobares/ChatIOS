@@ -49,7 +49,7 @@ struct SplashView: View {
                         .padding(.all,32)
                         
                 }else{
-                    Image("LogoTransparent")
+                    Image(systemName: "person.fill")
                         .resizable()
                         .clipShape(Circle())
                         .scaledToFit()
