@@ -24,6 +24,7 @@
 		6618CD502B7C342600F229BF /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6618CD4A2B7C342600F229BF /* MessageView.swift */; };
 		662B304F2B7CE656004162D9 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 662B304E2B7CE656004162D9 /* Launch Screen.storyboard */; };
 		662B30512B7D187D004162D9 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B30502B7D187D004162D9 /* ProfileView.swift */; };
+		662B30532B7D4725004162D9 /* ListChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B30522B7D4725004162D9 /* ListChatView.swift */; };
 		66AE2C052B6BA03E00641ACA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE2C042B6BA03D00641ACA /* AppDelegate.swift */; };
 		66D7C3B42B793F2700FE0ACA /* StateViewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7C3B32B793F2700FE0ACA /* StateViewApp.swift */; };
 		66EAE5622B48B23C00C595A3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EAE5612B48B23C00C595A3 /* Message.swift */; };
@@ -72,6 +73,7 @@
 		6618CD4A2B7C342600F229BF /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		662B304E2B7CE656004162D9 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		662B30502B7D187D004162D9 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		662B30522B7D4725004162D9 /* ListChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListChatView.swift; sourceTree = "<group>"; };
 		66AE2C042B6BA03D00641ACA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66D7C3B32B793F2700FE0ACA /* StateViewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateViewApp.swift; sourceTree = "<group>"; };
 		66EAE5612B48B23C00C595A3 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				6618CD462B7C342600F229BF /* SettingProfileView.swift */,
 				6618CD472B7C342600F229BF /* CoordinatorView.swift */,
 				6618CD482B7C342600F229BF /* SplashView.swift */,
+				662B30522B7D4725004162D9 /* ListChatView.swift */,
 				6618CD492B7C342600F229BF /* ChatView.swift */,
 				6618CD4A2B7C342600F229BF /* MessageView.swift */,
 				662B30502B7D187D004162D9 /* ProfileView.swift */,
@@ -346,6 +349,7 @@
 				6618CD4D2B7C342600F229BF /* CoordinatorView.swift in Sources */,
 				6618CD4E2B7C342600F229BF /* SplashView.swift in Sources */,
 				6618CD3E2B7C341100F229BF /* CKMessage.swift in Sources */,
+				662B30532B7D4725004162D9 /* ListChatView.swift in Sources */,
 				6618CD4F2B7C342600F229BF /* ChatView.swift in Sources */,
 				6618CD502B7C342600F229BF /* MessageView.swift in Sources */,
 				66D7C3B42B793F2700FE0ACA /* StateViewApp.swift in Sources */,

@@ -17,7 +17,7 @@ struct ChatView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var messageText: String = ""
     @State private var attachement: Data? = nil
-    @Query(sort: \Message.date, order: .forward, animation: .easeIn) var messages: [Message]
+    //@Query(sort: \Message.date, order: .forward, animation: .easeIn) var messages: [Message]
     @Query var users: [User]
     @State var loading: Bool = true
     
@@ -33,101 +33,83 @@ struct ChatView: View {
     
     var body: some View {
         NavigationView{
-            ScrollViewReader { proxy in
-                VStack {
-                    List(messages, id: \.self) { message in
-                        MessageView(message: message)
-                            .id(message)
-                            .listRowSeparator(.hidden)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .listStyle(.plain)
-                    .onChange(of: messages) { oldValue, newValue in
-                        guard oldValue.count < newValue.count else { return }
-                        withAnimation {
-                            proxy.scrollTo(messages.last, anchor: .bottom)
-                        }
-                    }
-                    
-                    
-                    // text and send button
-                    HStack(alignment: .center) {
-                        ZStack (content: {
-                            attachmentMenu()
-                        })
-                        .onChange(of: avatarItem) {
-                            Task {
-                                if let loaded = try? await avatarItem?.loadTransferable(type: Data.self) {
-                                    attachement = loaded
-                                } else {
-                                    attachement = nil
-                                    print("Error loading image")
-                                }
+            VStack {
+                ListChatView()
+                // text and send button
+                HStack(alignment: .center) {
+                    ZStack (content: {
+                        attachmentMenu()
+                    })
+                    .onChange(of: avatarItem) {
+                        Task {
+                            if let loaded = try? await avatarItem?.loadTransferable(type: Data.self) {
+                                attachement = loaded
+                            } else {
+                                attachement = nil
+                                print("Error loading image")
                             }
                         }
-                        
-                        
-                        // RoundedRectangle
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color(.systemGray5))
-                            .frame(height: 40)
-                            .overlay(
-                                HStack {
-                                    if attachement != nil {
-                                        // Miniature of the image (attachment)
-                                        Image(systemName: "photo.fill")
-                                            .foregroundColor(.blue)
-                                            .padding(.leading, 10)
-                                            .onTapGesture {
-                                                showImagePopover.toggle()
-                                            }
-                                            .popover(isPresented: $showImagePopover, arrowEdge: .bottom, content: {
-                                                imagePopupView(imageData: attachement!,
-                                                               deleteDelegate: {
-                                                                attachement = nil
-                                                                avatarItem = nil
-                                                               },
-                                                               hideDelegate: {
-                                                                    showImagePopover.toggle()
-                                                               })
-                                            })
-                                    }
-                                    TextField("Send a message", text: $messageText)
-                                        .padding(.horizontal, 8)
-                                }
-                            )
-                        
-                        Button {
-                            guard messageText.count > 0 else {
-                                return
-                            }
-                            sendAndShowMessage(text:messageText, attachment: attachement)
-                            
-                        } label: {
-                            //Paper plane icon that gets gray or blue depending on the message
-                            Image(systemName: "paperplane")
-                                .foregroundColor(messageText.count > 0 ? .blue : .gray)
-                                .scaledToFit()
-                                .frame(width: 30, height: 30)
-                        }
-                        .padding(.leading, 10)
-                        .disabled(messageText.count == 0)
                     }
-                    .padding(.horizontal)
-                    .padding(.top, 10)
-                    .padding(.bottom, 14)
-                    .frame(maxWidth: .infinity)
-                    .buttonStyle(.borderless)
-                    .background(Color(.systemGray6))
                     
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .onAppear {
-                    initialize()
-                    withAnimation {
-                        proxy.scrollTo(messages.last, anchor: .bottom)
+                    
+                    // RoundedRectangle
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(.systemGray5))
+                        .frame(height: 40)
+                        .overlay(
+                            HStack {
+                                if attachement != nil {
+                                    // Miniature of the image (attachment)
+                                    Image(systemName: "photo.fill")
+                                        .foregroundColor(.blue)
+                                        .padding(.leading, 10)
+                                        .onTapGesture {
+                                            showImagePopover.toggle()
+                                        }
+                                        .popover(isPresented: $showImagePopover, arrowEdge: .bottom, content: {
+                                            imagePopupView(imageData: attachement!,
+                                                           deleteDelegate: {
+                                                            attachement = nil
+                                                            avatarItem = nil
+                                                           },
+                                                           hideDelegate: {
+                                                                showImagePopover.toggle()
+                                                           })
+                                        })
+                                }
+                                TextField("Send a message", text: $messageText)
+                                    .padding(.horizontal, 8)
+                            }
+                        )
+                    
+                    Button {
+                        guard messageText.count > 0 else {
+                            return
+                        }
+                        sendAndShowMessage(text:messageText, attachment: attachement)
+                        
+                    } label: {
+                        //Paper plane icon that gets gray or blue depending on the message
+                        Image(systemName: "paperplane")
+                            .foregroundColor(messageText.count > 0 ? .blue : .gray)
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
                     }
+                    .padding(.leading, 10)
+                    .disabled(messageText.count == 0)
                 }
+                .padding(.horizontal)
+                .padding(.top, 10)
+                .padding(.bottom, 14)
+                .frame(maxWidth: .infinity)
+                .buttonStyle(.borderless)
+                .background(Color(.systemGray6))
+                
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onAppear {
+                initialize()
+                
             }
             .navigationTitle("Chat")
             .toolbar{
