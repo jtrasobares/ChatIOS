@@ -28,8 +28,8 @@ struct MessageView: View{
                     if(message.image != nil){
                         Image(uiImage: message.getImageUI()!)
                             .resizable()
-                            .scaledToFit()
                             .cornerRadius(10)
+                            .scaledToFit()
                             .padding(.horizontal, 8)
                             
                         
@@ -48,13 +48,11 @@ struct MessageView: View{
                 if(message.user!.image != nil){
                     Image(uiImage:message.user!.getImageUI()!)
                                         .resizable()
-                                        .scaledToFit()
                                         .frame(width: 30, height: 30, alignment: .bottom)
                                         .cornerRadius(20)
                 }else{
                     Image(systemName: "person.circle.fill")
                                         .resizable()
-                                        .scaledToFit()
                                         .frame(width: 30, height: 30, alignment: .bottom)
                                         .cornerRadius(20)
                 }

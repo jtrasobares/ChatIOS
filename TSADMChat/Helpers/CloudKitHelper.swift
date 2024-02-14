@@ -60,9 +60,8 @@ struct CloudKitHelper {
         }
     }
     
-    public func downloadMessages(from: Date?, usersSaved: [User]) async -> ([Message],[User]) {
-        var ckListmessages = [CKMessage]()
-        var messages = [Message]()
+    public func downloadMessages(from: Date?) async -> ([CKMessage],[User]) {
+        var messages = [CKMessage]()
         var users: [User] = []
            
         await downloadMessages(from: from) { recordID, recordResult in
@@ -75,7 +74,7 @@ struct CloudKitHelper {
                if record["image"] != nil{
                    image = (record["image"] as! CKAsset).toData()
                }
-               ckListmessages.append(
+               messages.append(
                 CKMessage(id:recordID.recordName,userID: user,text:text,image:image)
                )
                
@@ -84,33 +83,15 @@ struct CloudKitHelper {
            }
         }
 
-        for ckMessage in ckListmessages {
+        for message in messages {
             do{
-                let idUser = ckMessage.userID!
-                if ckMessage.image != nil{
-                    print("Nacho es el mejor")
-                }
-                if let user = try users.filter(#Predicate{ user in user.id == idUser}).first{
-                    messages.append(Message(id:ckMessage.id,user: user,text: ckMessage.text,image: ckMessage.image))
-                }else{
+                let idUser = message.userID!
+                if try users.filter(#Predicate{ user in user.id == idUser}).isEmpty{
                     let result = await getUser(recordID: idUser)
                     switch (result) {
                     case .success(let newUser):
-                        if let userSaved = try users.filter(#Predicate{ user in user.id == idUser}).first{
-                            if userSaved.name != newUser.name{
-                                userSaved.name = newUser.name
-                            }
-                            if userSaved.image != newUser.image{
-                                userSaved.image = newUser.image
-                                userSaved.imageUI = nil
-                            }
-                            users.append(userSaved)
-                            messages.append(Message(id:ckMessage.id,user: userSaved,text: ckMessage.text,image: ckMessage.image))
-                        }
-                        else{
-                            users.append(newUser)
-                            messages.append(Message(id:ckMessage.id,user: newUser,text: ckMessage.text,image: ckMessage.image))
-                        }
+                        users.append(newUser)
+                        
                         
                     case .failure(let error):
                         print("Error retrieving data: \(error)")

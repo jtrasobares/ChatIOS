@@ -25,7 +25,7 @@ struct ChatView: View {
     
     
     var body: some View {
-        NavigationStack{
+        NavigationView{
             ScrollViewReader { proxy in
                 VStack {
                     List(messages, id: \.self) { message in
@@ -92,6 +92,9 @@ struct ChatView: View {
             .navigationTitle("Chat")
             .toolbar{
                 Button{
+                    withAnimation(.easeInOut(duration: 1)) {
+                        state = .registering
+                    }
                     
                 } label:{
                     Image(systemName: "gearshape")
@@ -119,7 +122,7 @@ struct ChatView: View {
                 message = ""
             }
             if let user = try users.filter(#Predicate{ user in user.id == "__defaultOwner__"}).first{
-                    modelContext.insert(Message(id:"Local",user:user,text: message))
+                modelContext.insert(Message(id:"Local",text: message, user: user))
             }
             
         }catch{
@@ -132,19 +135,19 @@ struct ChatView: View {
         NotificationCenter.default.addObserver(forName: NSNotification.Name("Download"), object: nil, queue: .main, using: { notification in
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5){
                 Task{
-                    let result = await CloudKitHelper().downloadMessages(from: UserDefaults.standard.object(forKey: "date") as! Date?,usersSaved: users)
-                    let newMessagesList = result.0
+                    let result = await CloudKitHelper().downloadMessages(from: UserDefaults.standard.object(forKey: "date") as! Date?)
+                    let newCKMessagesList = result.0
                     let newUsersList = result.1
-                    try modelContext.transaction {
-                        newMessagesList.forEach{ message in
-                            modelContext.insert(message)
-                        }
-                    }
+                    UserDefaults.standard.set(Date.now, forKey: "date")
                     try modelContext.transaction {
                         newUsersList.forEach{ newUser in
                             let idNewUser: String = newUser.id!
                             do{
-                                if try users.filter(#Predicate{ user in user.id == idNewUser}).isEmpty{
+                                if let user = try users.filter(#Predicate{ user in user.id == idNewUser}).first{
+                                    user.name = newUser.name
+                                    user.image = newUser.image
+                                }
+                                else{
                                     modelContext.insert(newUser)
                                 }
                             }catch{
@@ -152,7 +155,22 @@ struct ChatView: View {
                             }
                         }
                     }
-                    UserDefaults.standard.set(Date.now, forKey: "date")
+                    try modelContext.transaction {
+                        newCKMessagesList.forEach{ ckMessage in
+                            do{
+                                let idNewUser: String = ckMessage.userID!
+                                var message = Message(id: ckMessage.id,text: ckMessage.text, image: ckMessage.image)
+                                if let user = try users.filter(#Predicate{ user in user.id == idNewUser}).first{
+                                    message.user = user
+                                }
+                                modelContext.insert(message)
+                            }catch{
+                                
+                            }
+                            
+                        }
+                    }
+                    
                 }
             }
         })

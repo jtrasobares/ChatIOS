@@ -11,8 +11,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-       UIApplication.shared.registerForRemoteNotifications()
+        UIApplication.shared.registerForRemoteNotifications()
         UNUserNotificationCenter.current().delegate = self
+        Thread.sleep(forTimeInterval: 2.0)
         return true
     }
     
@@ -34,6 +35,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         NotificationCenter.default.post(name: NSNotification.Name("Download"), object: self)
         completionHandler(.list)
     }
+    
     
     
     

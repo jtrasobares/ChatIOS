@@ -16,6 +16,7 @@ struct SplashView: View {
     @State private var scale = 0.7
     @Binding var state: StateViewApp
     @Query var users: [User]
+    @State private var needsTryLogin = false
 
     @State var user: User?
     
@@ -59,6 +60,16 @@ struct SplashView: View {
                     .font(.title)
                     .padding([.top], 20)
                     .padding([.bottom], 40)
+                Button{
+                    loadingData()
+                } label:{
+                    Text("Login")
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 8)
+                }.opacity(needsTryLogin ? 1 : 0)
+                    .buttonStyle(.borderedProminent)
+                    .font(.system(size: 28, weight: .semibold))
+                    
             }
             
         }.onAppear{
@@ -76,12 +87,15 @@ struct SplashView: View {
         if UserDefaults.standard.bool(forKey: "security"){
             let context = LAContext()
             var error: NSError?
-
+            needsTryLogin = false
             if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
                 let reason = "We need to unlock your data."
                 context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
                     if success {
                         checkAndDownloadData()
+                        
+                    }else{
+                        needsTryLogin = true
                     }
                 }
             }
@@ -96,20 +110,19 @@ struct SplashView: View {
             do{
                 CloudKitHelper().requestNotificationPermissions()
                 let _ = try await CloudKitHelper().checkForSubscriptions()
-                let result = await CloudKitHelper().downloadMessages(from: UserDefaults.standard.object(forKey: "date") as! Date?,usersSaved: users)
-                let newMessagesList = result.0
+                let result = await CloudKitHelper().downloadMessages(from: UserDefaults.standard.object(forKey: "date") as! Date?)
+                let newCKMessagesList = result.0
                 let newUsers = result.1
                 UserDefaults.standard.set(Date.now, forKey: "date")
-                try modelContext.transaction {
-                    newMessagesList.forEach{ message in
-                        modelContext.insert(message)
-                    }
-                }
                 try modelContext.transaction {
                     newUsers.forEach{ newUser in
                         let idNewUser: String = newUser.id!
                         do{
-                            if try users.filter(#Predicate{ user in user.id == idNewUser}).isEmpty{
+                            if let user = try users.filter(#Predicate{ user in user.id == idNewUser}).first{
+                                user.name = newUser.name
+                                user.image = newUser.image
+                            }
+                            else{
                                 modelContext.insert(newUser)
                             }
                         }catch{
@@ -117,6 +130,22 @@ struct SplashView: View {
                         }
                     }
                 }
+                try modelContext.transaction {
+                    newCKMessagesList.forEach{ ckMessage in
+                        do{
+                            let idNewUser: String = ckMessage.userID!
+                            var message = Message(id: ckMessage.id,text: ckMessage.text, image: ckMessage.image)
+                            if let user = try users.filter(#Predicate{ user in user.id == idNewUser}).first{
+                                message.user = user
+                            }
+                            modelContext.insert(message)
+                        }catch{
+                            
+                        }
+                        
+                    }
+                }
+                
                 withAnimation(.easeInOut(duration: 1)) {
                     self.state = .working
                 }

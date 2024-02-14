@@ -16,6 +16,7 @@ struct LoginView : View {
     @Environment(\.modelContext) var modelContext
     @Query(filter: #Predicate<User>{ user in user.id == "__defaultOwner__"}) var users: [User]
     @State private var actualUser: User? = nil
+    @State private var isFinished: Bool = false
     @State private var username: String = ""
     @State private var avatarItem: PhotosPickerItem?
     @State private var avatarImageData: Data? = nil
@@ -23,6 +24,8 @@ struct LoginView : View {
     @State private var showImagePopover = false
     @State private var showCameraPop = false
     @State private var securityEnable = false
+    @State private var isUpdating: Bool = UserDefaults.standard.string(forKey: "username") != nil
+    @State private var text: String = UserDefaults.standard.string(forKey: "username") != nil ? "Update Account": "Create Account"
     @State var type: UIImagePickerController.SourceType = .photoLibrary
 
     func loginNewUsername() {
@@ -31,7 +34,10 @@ struct LoginView : View {
         Task{
             actualUser!.name = username
             actualUser!.image = avatarImageData
-            modelContext.insert(actualUser!)
+            if users.isEmpty{
+                modelContext.insert(actualUser!)
+            }
+            
             do{
                 try await CloudKitHelper().updateUser(newName:username,image:avatarImageData?.toCKAsset())
                 state = .loading
@@ -57,13 +63,13 @@ struct LoginView : View {
                     Toggle(isOn: $securityEnable) {
                             Text("Security in the app")
                     }
-                                    
                     Button {
+                        isFinished = true
                         loginNewUsername()
                     } label: {
                         HStack {
                             Spacer()
-                            Text("Create Account")
+                            Text(text)
                                 .foregroundColor(.white)
                                 .padding(.vertical, 10)
                                 .font(.system(size: 14, weight: .semibold))
@@ -72,6 +78,24 @@ struct LoginView : View {
                     }
                     .background(Color.blue)
                     .cornerRadius(10)
+                    .opacity(isFinished ? 0 : 1)
+                    if isUpdating{
+                        Button {
+                            isFinished = true
+                            state = .loading
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Text("Cancel")
+                                    .padding(.vertical, 10)
+                                    .font(.system(size: 14, weight: .semibold))
+                                Spacer()
+                            }
+                        }
+                        .buttonStyle(.bordered)
+                        .cornerRadius(10)
+                        .opacity(isFinished ? 0 : 1)
+                    }
                 }.padding()
             }
             .onAppear{
@@ -90,7 +114,7 @@ struct LoginView : View {
                 
                 
             }
-            .navigationTitle("Create Account")
+            .navigationTitle(text)
         }
     }
     

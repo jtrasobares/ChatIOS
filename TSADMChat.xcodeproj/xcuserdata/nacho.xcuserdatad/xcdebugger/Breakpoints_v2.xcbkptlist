@@ -62,8 +62,8 @@
             filePath = "TSADMChat/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
             landmarkName = "application(_:didReceiveRemoteNotification:fetchCompletionHandler:)"
             landmarkType = "7">
             <Locations>
@@ -155,6 +155,36 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "21"
                   endingLineNumber = "21"
+                  offsetFromSymbolStart = "188">
+               </Location>
+               <Location
+                  uuid = "D151264E-61B3-4E6B-8790-86B8C376180C - cf05f78c4e441d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TSADMChat.AppDelegate.application(_: __C.UIApplication, didReceiveRemoteNotification: Swift.Dictionary&lt;Swift.AnyHashable, Any&gt;, fetchCompletionHandler: (__C.UIBackgroundFetchResult) -&gt; ()) -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/ChatIOS/TSADMChat/AppDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "D151264E-61B3-4E6B-8790-86B8C376180C - cf05f78c4e441d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TSADMChat.AppDelegate.application(_: __C.UIApplication, didReceiveRemoteNotification: Swift.Dictionary&lt;Swift.AnyHashable, Any&gt;, fetchCompletionHandler: (__C.UIBackgroundFetchResult) -&gt; ()) -&gt; ()"
+                  moduleName = "TSADMChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nacho/Documents/ChatIOS/TSADMChat/AppDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
                   offsetFromSymbolStart = "188">
                </Location>
             </Locations>

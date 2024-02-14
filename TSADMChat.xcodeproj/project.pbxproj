@@ -23,6 +23,7 @@
 		6618CD4E2B7C342600F229BF /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6618CD482B7C342600F229BF /* SplashView.swift */; };
 		6618CD4F2B7C342600F229BF /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6618CD492B7C342600F229BF /* ChatView.swift */; };
 		6618CD502B7C342600F229BF /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6618CD4A2B7C342600F229BF /* MessageView.swift */; };
+		662B304F2B7CE656004162D9 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 662B304E2B7CE656004162D9 /* Launch Screen.storyboard */; };
 		66AE2C052B6BA03E00641ACA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE2C042B6BA03D00641ACA /* AppDelegate.swift */; };
 		66D7C3B42B793F2700FE0ACA /* StateViewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7C3B32B793F2700FE0ACA /* StateViewApp.swift */; };
 		66EAE5622B48B23C00C595A3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EAE5612B48B23C00C595A3 /* Message.swift */; };
@@ -70,6 +71,7 @@
 		6618CD482B7C342600F229BF /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		6618CD492B7C342600F229BF /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		6618CD4A2B7C342600F229BF /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		662B304E2B7CE656004162D9 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		66AE2C042B6BA03D00641ACA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66D7C3B32B793F2700FE0ACA /* StateViewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateViewApp.swift; sourceTree = "<group>"; };
 		66EAE5612B48B23C00C595A3 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				02F95A512B0B4FAD00F4D5C0 /* TSADMChat.entitlements */,
 				02F95A522B0B4FAD00F4D5C0 /* Info.plist */,
 				02F95A4E2B0B4FAD00F4D5C0 /* Preview Content */,
+				662B304E2B7CE656004162D9 /* Launch Screen.storyboard */,
 			);
 			path = TSADMChat;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				662B304F2B7CE656004162D9 /* Launch Screen.storyboard in Resources */,
 				02F95A502B0B4FAD00F4D5C0 /* Preview Assets.xcassets in Resources */,
 				02F95A4D2B0B4FAD00F4D5C0 /* Assets.xcassets in Resources */,
 			);
@@ -523,9 +527,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TSADMChat/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OneThread;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSCameraUsageDescription = "TSADMChat needs access to the camera to take photos";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Please Insert Your Face";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -554,9 +563,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TSADMChat/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OneThread;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSCameraUsageDescription = "TSADMChat needs access to the camera to take photos";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Please Insert Your Face";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

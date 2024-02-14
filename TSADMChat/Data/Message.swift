@@ -11,16 +11,16 @@ import SwiftData
 @Model
 class Message{
     var id: String?
-    var user: User?
     var text: String?
     var image: Data?
     @Transient var imageUI: UIImage?
+    var user: User?
     
-    init(id: String? = nil, user: User? = nil, text: String? = nil,image: Data? = nil) {
+    init(id: String? = nil, text: String? = nil,image: Data? = nil, user: User? = nil) {
         self.id = id
-        self.user = user
         self.text = text
         self.image = image
+        self.user = user
     }
     
     func getImageUI()-> UIImage?{
