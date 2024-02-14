@@ -143,9 +143,12 @@ struct CloudKitHelper {
             }
     }
     
-    public func sendMessage(_ text: String) async throws {
+    public func sendMessage(_ text: String, _ attachment: Data?) async throws {
         let message = CKRecord(recordType: "Message")
         message["text"] = text as NSString
+        if (attachment != nil) {
+            message["image"] = attachment?.toCKAsset()
+        }
         let db = CKContainer.default().publicCloudDatabase
         try await db.save(message)
     }

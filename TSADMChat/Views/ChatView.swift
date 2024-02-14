@@ -10,15 +10,21 @@
 import SwiftUI
 import CloudKit
 import SwiftData
-
+import PhotosUI
 
 struct ChatView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.scenePhase) var scenePhase
     @State private var message: String = ""
+    @State private var attachement: Data? = nil
     @Query var messages: [Message]
     @Query var users: [User]
     @State var loading: Bool = true
+    
+    @State var isAtachmentMenuOpen = false
+    @State var showPicNewImage = false
+    @State var showPicFromCamera = false
+    @State private var avatarItem: PhotosPickerItem?
     
     @Binding var state: StateViewApp
     
@@ -45,13 +51,36 @@ struct ChatView: View {
                     
                     // text and send button
                     HStack {
-                        Button {
+                        ZStack{
+                            Button {
+                                isAtachmentMenuOpen.toggle()
+                            } label:{
+                                Image(systemName: "plus.circle")
+                            }
+                            .buttonStyle(.borderless)
                             
-                        } label:{
-                            Image(systemName: "plus.circle")
+                            Menu {
+                                Button {
+                                    //Change the image
+                                    showPicNewImage.toggle()
+                                } label: {
+                                    Label("Change Image", systemImage: "image")
+                                }
+                                Button {
+                                    showPicFromCamera.toggle()
+                                } label: {
+                                    Label("Take from camera", systemImage: "camera")
+                                }
+                            } label: {
+                                
+                            }
+                            .photosPicker(isPresented: $showPicNewImage, selection: $avatarItem, matching: .images, photoLibrary: .shared())
+                            .fullScreenCover(isPresented: $showPicFromCamera) {
+                                CameraPickerView() { image in
+                                    attachement = image.pngData()
+                                }
+                            }
                         }
-                        .buttonStyle(.borderless)
-                        
                         
                         
                         TextField("Send a message", text: $message)
@@ -67,7 +96,7 @@ struct ChatView: View {
                             guard message.count > 0 else {
                                 return
                             }
-                            sendAndShowMessage(text:message)
+                            sendAndShowMessage(text:message, attachment: attachement)
                             
                         } label: {
                             Image(systemName: "paperplane.fill")
@@ -110,19 +139,17 @@ struct ChatView: View {
                 }
             }
         }
-        
-        
     }
     
-    public func sendAndShowMessage(text:String){
+    public func sendAndShowMessage(text:String, attachment: Data? = nil){
         do{
             Task{
-                try await CloudKitHelper().sendMessage(text)
+                try await CloudKitHelper().sendMessage(text, attachment)
                 UserDefaults.standard.set(Date.now, forKey: "date")
                 message = ""
             }
             if let user = try users.filter(#Predicate{ user in user.id == "__defaultOwner__"}).first{
-                modelContext.insert(Message(id:"Local",text: message, user: user))
+                modelContext.insert(Message(id:"Local",text: message, image: attachment, user: user))
             }
             
         }catch{
