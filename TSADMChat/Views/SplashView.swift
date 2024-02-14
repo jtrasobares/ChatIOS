@@ -11,6 +11,13 @@ import SwiftData
 import CloudKit
 import LocalAuthentication
 
+/**
+    # SplashView #
+    This view is used to show the splash screen of the app
+ 
+ - parameter state: Binding to the StateViewApp
+
+ */
 struct SplashView: View {
     @Environment(\.modelContext) var modelContext
     @State private var scale = 0.7

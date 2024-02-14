@@ -152,6 +152,7 @@ struct CloudKitHelper {
             message["image"] = attachment?.toCKAsset()
         }
         let db = CKContainer.default().publicCloudDatabase
+        //TODO: Return for the record id
         try await db.save(message)
     }
     

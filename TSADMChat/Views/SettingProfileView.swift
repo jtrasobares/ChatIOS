@@ -10,6 +10,12 @@ import SwiftData
 import PhotosUI
 import LocalAuthentication
  
+/**
+    # LoginView #
+    This view is used to create or update the user's account depending on the presence of previous data of the user
+ - parameter state: Binding to the StateViewApp
+ - returns: View
+ */
 struct LoginView : View {
     @Binding var state: StateViewApp
     
@@ -44,9 +50,7 @@ struct LoginView : View {
             }catch{
                 print(error)
             }
-            
         }
-        
     }
     
     var body: some View {
@@ -188,7 +192,6 @@ struct LoginView : View {
             }
         }
         .padding(.top)
-        
     }
 }
  
