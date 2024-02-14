@@ -121,10 +121,10 @@ struct LoginView : View {
     func avatarModularIcon() -> some View {
         return ZStack(alignment: .center, content: {
             if (avatarImageData == nil) {
-                viewPickNewAvatar()
+                viewEditAvatar()
             }
             else {
-                viewEditAvatar()
+                viewEditAvatar(canShowImage: true)
             }
         })
         .onChange(of: avatarItem) {
@@ -139,13 +139,15 @@ struct LoginView : View {
         }
     }
     
-    func viewEditAvatar() -> some View {
+    func viewEditAvatar(canShowImage: Bool = false) -> some View {
         return Menu {
-            Button {
-                //Show the image in a pop up
-                showImagePopover.toggle()
-            } label: {
-                Label("See Image", systemImage: "eye")
+            if (canShowImage) {
+                Button {
+                    //Show the image in a pop up
+                    showImagePopover.toggle()
+                } label: {
+                    Label("See Image", systemImage: "eye")
+                }
             }
             Button {
                 //Change the image
@@ -187,23 +189,6 @@ struct LoginView : View {
         }
         .padding(.top)
         
-    }
-    
-    func viewPickNewAvatar() -> some View {
-        return PhotosPicker(selection: $avatarItem,
-                             matching: .images,
-                             photoLibrary: .shared()) {
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .frame(width: 120, height: 120, alignment: .center)
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(50)
-                        .padding()
-                        .foregroundColor(.accentColor)
-            
-                }
-                .buttonStyle(.borderless)
-                .padding(.top)
     }
 }
  

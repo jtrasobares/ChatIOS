@@ -9,7 +9,7 @@ import SwiftUI
 
 // Gets an image as Data and a Delegate to call when a button is pressed (delete) (can be nil)
 func imagePopupView(imageData: Data, deleteDelegate: (() -> Void)? = nil, hideDelegate: (() -> Void)? = nil) -> some View {
-return VStack {
+    return VStack {
         Image(uiImage: UIImage(data: imageData)!)
             .resizable()
             .aspectRatio(contentMode: .fit)
@@ -48,4 +48,3 @@ return VStack {
         }
     }
 }
-
