@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-// Gets an image as Data and a Delegate to call when a button is pressed (delete) (can be nil)
+/**
+ # Utils #
+ This struct is used to create a set of utilities that can be used in SwiftUI views.
+ */
 func imagePopupView(imageData: Data, deleteDelegate: (() -> Void)? = nil, hideDelegate: (() -> Void)? = nil) -> some View {
     return VStack {
         Image(uiImage: UIImage(data: imageData)!)
@@ -16,7 +19,7 @@ func imagePopupView(imageData: Data, deleteDelegate: (() -> Void)? = nil, hideDe
             .frame(width: .infinity, height: nil, alignment: .center)
             .cornerRadius(10)
             .padding()
-            // Show the hide and delete buttons
+        // Show the hide and delete buttons
         if (deleteDelegate != nil || hideDelegate != nil) {
             HStack {
                 if hideDelegate != nil {

@@ -8,8 +8,8 @@
 import SwiftUI
 
 /**
-    # ViewCoordinator #
-    This view is used to coordinate the different views of the app
+ # ViewCoordinator #
+ This view is used to coordinate the different views of the app
  */
 struct ViewCoordinator: View {
     @State private var state: StateViewApp = .loading

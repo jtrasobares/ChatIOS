@@ -9,6 +9,11 @@ import SwiftUI
 import PhotosUI
 import SwiftData
 
+/**
+ # MessageView #
+ A view to display the message in the chat. It contains the logic to show the image and to show the profile of the user.
+ 
+ */
 struct MessageView: View{
     let message: Message
     @State var showProfile: Bool = false
@@ -50,36 +55,36 @@ struct MessageView: View{
                         .padding(.horizontal, 12)
                         .foregroundColor(.white)
                         .frame(alignment: .leading)
-
+                    
                 }
                 .background(Color(UIColor.systemBlue))
                 .clipShape(BubbleShape(myMessage: true))
                 .padding(.bottom,15)
                 if(message.user!.image != nil){
                     Image(uiImage:message.user!.getImageUI()!)
-                                        .resizable()
-                                        .frame(width: 30, height: 30, alignment: .bottom)
-                                        .cornerRadius(20)
-                                        .onTapGesture {
-                                            showProfile.toggle()
-                                        }
-                                        .sheet(isPresented: $showProfile){
-                                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
-                                        }
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .bottom)
+                        .cornerRadius(20)
+                        .onTapGesture {
+                            showProfile.toggle()
+                        }
+                        .sheet(isPresented: $showProfile){
+                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
+                        }
                 }else{
                     Image(systemName: "person.circle.fill")
-                                        .resizable()
-                                        .frame(width: 30, height: 30, alignment: .bottom)
-                                        .cornerRadius(20)
-                                        .onTapGesture {
-                                            showProfile.toggle()
-                                        }
-                                        .sheet(isPresented: $showProfile){
-                                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
-                                        }
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .bottom)
+                        .cornerRadius(20)
+                        .onTapGesture {
+                            showProfile.toggle()
+                        }
+                        .sheet(isPresented: $showProfile){
+                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
+                        }
                 }
                 
-                                
+                
                 
             }
             .padding(.leading, 55)
@@ -91,27 +96,27 @@ struct MessageView: View{
             HStack(alignment: .bottom)  {
                 if(message.user!.image != nil){
                     Image(uiImage:message.user!.getImageUI()!)
-                                        .resizable()
-                                        .frame(width: 30, height: 30, alignment: .bottom)
-                                        .cornerRadius(20)
-                                        .onTapGesture {
-                                            showProfile.toggle()
-                                        }
-                                        .sheet(isPresented: $showProfile){
-                                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
-                                        }
-                                        
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .bottom)
+                        .cornerRadius(20)
+                        .onTapGesture {
+                            showProfile.toggle()
+                        }
+                        .sheet(isPresented: $showProfile){
+                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
+                        }
+                    
                 }else{
                     Image(systemName: "person.circle.fill")
-                                        .resizable()
-                                        .frame(width: 30, height: 30, alignment: .bottom)
-                                        .cornerRadius(20)
-                                        .onTapGesture {
-                                            showProfile.toggle()
-                                        }
-                                        .sheet(isPresented: $showProfile){
-                                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
-                                        }
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .bottom)
+                        .cornerRadius(20)
+                        .onTapGesture {
+                            showProfile.toggle()
+                        }
+                        .sheet(isPresented: $showProfile){
+                            ProfileView(user: message.user!).presentationDragIndicator(.visible)
+                        }
                 }
                 VStack(alignment: .leading){
                     
@@ -149,13 +154,13 @@ struct MessageView: View{
                         .frame(alignment: .leading)
                 }.id("text")
                     .background(Color(UIColor.systemOrange))
-                .clipShape(BubbleShape(myMessage: false))
-                .padding(.bottom,15)
+                    .clipShape(BubbleShape(myMessage: false))
+                    .padding(.bottom,15)
                 Spacer()
             }
             .padding(.trailing, 55)
         }
-
+        
     }
     
     
@@ -201,5 +206,5 @@ struct BubbleShape: Shape {
 
 
 /*#Preview{
-    MessageView(message: Message(id: "1", user: "Pedro", text: "Hola Soy pedro"))
-}*/
+ MessageView(message: Message(id: "1", user: "Pedro", text: "Hola Soy pedro"))
+ }*/

@@ -6,6 +6,17 @@
 //
 
 import Foundation
+
+/**
+ # CKMessage #
+ A class that represents a message in the chat.
+ 
+ - parameter id: The id of the message.
+ - parameter userID: The id of the user that sends the message.
+ - parameter text: The text of the message.
+ - parameter date: The date of the message.
+ - parameter image: The image of the message.
+ */
 class CKMessage{
     var id: String
     var userID: String?
@@ -21,4 +32,4 @@ class CKMessage{
         self.date = date
     }
     
- }
+}

@@ -12,12 +12,15 @@ import CloudKit
 import SwiftData
 import PhotosUI
 
+/**
+ # ChatView #
+ A view to display the chat between the user and the other users. It contains the list of messages and the bar to send a message. It also contains the logic to send the message and to show the image.
+ */
 struct ChatView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.scenePhase) var scenePhase
     @State private var messageText: String = ""
     @State private var attachement: Data? = nil
-    //@Query(sort: \Message.date, order: .forward, animation: .easeIn) var messages: [Message]
     @Query var users: [User]
     @State var loading: Bool = true
     
@@ -29,99 +32,9 @@ struct ChatView: View {
     
     @Binding var state: StateViewApp
     
-    
-    
     var body: some View {
         NavigationView{
-            VStack {
-                ListChatView()
-                // text and send button
-                HStack(alignment: .center) {
-                    ZStack (content: {
-                        attachmentMenu()
-                    })
-                    .onChange(of: avatarItem) {
-                        Task {
-                            if let loaded = try? await avatarItem?.loadTransferable(type: Data.self) {
-                                attachement = loaded
-                            } else {
-                                attachement = nil
-                                print("Error loading image")
-                            }
-                        }
-                    }
-                    
-                    
-                    // RoundedRectangle
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color(.systemGray5))
-                        .frame(height: 40)
-                        .overlay(
-                            HStack {
-                                if attachement != nil {
-                                    // Miniature of the image (attachment)
-                                    Image(systemName: "photo.fill")
-                                        .foregroundColor(.blue)
-                                        .padding(.leading, 10)
-                                        .onTapGesture {
-                                            showImagePopover.toggle()
-                                        }
-                                        .popover(isPresented: $showImagePopover, arrowEdge: .bottom, content: {
-                                            imagePopupView(imageData: attachement!,
-                                                           deleteDelegate: {
-                                                            attachement = nil
-                                                            avatarItem = nil
-                                                           },
-                                                           hideDelegate: {
-                                                                showImagePopover.toggle()
-                                                           })
-                                        })
-                                }
-                                TextField("Send a message", text: $messageText)
-                                    .padding(.horizontal, 8)
-                            }
-                        )
-                    
-                    Button {
-                        guard messageText.count > 0 else {
-                            return
-                        }
-                        sendAndShowMessage(text:messageText, attachment: attachement)
-                        
-                    } label: {
-                        //Paper plane icon that gets gray or blue depending on the message
-                        Image(systemName: "paperplane")
-                            .foregroundColor(messageText.count > 0 ? .blue : .gray)
-                            .scaledToFit()
-                            .frame(width: 30, height: 30)
-                    }
-                    .padding(.leading, 10)
-                    .disabled(messageText.count == 0)
-                }
-                .padding(.horizontal)
-                .padding(.top, 10)
-                .padding(.bottom, 14)
-                .frame(maxWidth: .infinity)
-                .buttonStyle(.borderless)
-                .background(Color(.systemGray6))
-                
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .onAppear {
-                initialize()
-                
-            }
-            .navigationTitle("Chat")
-            .toolbar{
-                Button{
-                    withAnimation(.easeInOut(duration: 1)) {
-                        state = .registering
-                    }
-                    
-                } label:{
-                    Image(systemName: "gearshape")
-                }
-            }
+            mainChatView()
         }.onChange(of: scenePhase) {
             if scenePhase == .active{
                 if loading{
@@ -132,6 +45,101 @@ struct ChatView: View {
                 }
             }
         }
+    }
+    
+    func mainChatView() -> some View {
+        return VStack {
+            ListChatView()
+            // text and send button
+            sendMessageBar()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            initialize()
+        }
+        .navigationTitle("OneThread")
+        .toolbar{
+            Button{
+                withAnimation(.easeInOut(duration: 1)) {
+                    state = .registering
+                }
+            } label:{
+                Image(systemName: "gearshape")
+            }
+        }
+    }
+    
+    func sendMessageBar() -> some View {
+        return HStack(alignment: .center) {
+            ZStack (content: {
+                attachmentMenu()
+            })
+            .onChange(of: avatarItem) {
+                Task {
+                    if let loaded = try? await avatarItem?.loadTransferable(type: Data.self) {
+                        attachement = loaded
+                    } else {
+                        attachement = nil
+                        print("Error loading image")
+                    }
+                }
+            }
+            
+            messageBar()
+            
+            Button {
+                guard messageText.count > 0 else {
+                    return
+                }
+                sendAndShowMessage(text:messageText, attachment: attachement)
+                
+            } label: {
+                //Paper plane icon that gets gray or blue depending on the message
+                Image(systemName: "paperplane")
+                    .foregroundColor(messageText.count > 0 ? .blue : .gray)
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+            }
+            .padding(.leading, 10)
+            .disabled(messageText.count == 0)
+        }
+        .padding(.horizontal)
+        .padding(.top, 10)
+        .padding(.bottom, 14)
+        .frame(maxWidth: .infinity)
+        .buttonStyle(.borderless)
+        .background(Color(.systemGray6))
+    }
+    
+    func messageBar() -> some View {
+        return RoundedRectangle(cornerRadius: 10)
+            .fill(Color(.systemGray5))
+            .frame(height: 40)
+            .overlay(
+                HStack {
+                    if attachement != nil {
+                        // Miniature of the image (attachment)
+                        Image(systemName: "photo.fill")
+                            .foregroundColor(.blue)
+                            .padding(.leading, 10)
+                            .onTapGesture {
+                                showImagePopover.toggle()
+                            }
+                            .popover(isPresented: $showImagePopover, arrowEdge: .bottom, content: {
+                                imagePopupView(imageData: attachement!,
+                                               deleteDelegate: {
+                                    attachement = nil
+                                    avatarItem = nil
+                                },
+                                               hideDelegate: {
+                                    showImagePopover.toggle()
+                                })
+                            })
+                    }
+                    TextField("Send a message", text: $messageText)
+                        .padding(.horizontal, 8)
+                }
+            )
     }
     
     func attachmentMenu() -> some View {
@@ -174,7 +182,6 @@ struct ChatView: View {
             Task{
                 try await CloudKitHelper().sendMessage(text, attachment)
                 UserDefaults.standard.set(Date.now, forKey: "date")
-                
             }
             if let user = try users.filter(#Predicate{ user in user.id == "__defaultOwner__"}).first{
                 modelContext.insert(Message(id:"Local",date: Date.now,text: messageText, image: attachment, user: user))
@@ -183,7 +190,6 @@ struct ChatView: View {
         }catch{
             print(error)
         }
-        
     }
     
     public func initialize(){

@@ -8,6 +8,14 @@
 import SwiftUI
 import SwiftData
 
+/**
+ # User #
+ A class that represents a user.
+ 
+ - parameter id: The id of the user.
+ - parameter name: The name of the user.
+ - parameter image: The image of the user.
+ */
 @Model
 class User{
     var id: String?

@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+/**
+ # CameraPickerView #
+ This struct is used to create a camera picker that can be used in SwiftUI views.
+ 
+ - parameter onImagePicked: (UIImage) -> Void
+ - returns: UIViewControllerRepresentable
+ 
+ # Notes: #
+ 1. The struct is used to create a camera picker that can be used in SwiftUI views.
+ */
 struct CameraPickerView: UIViewControllerRepresentable {
     
     private var sourceType: UIImagePickerController.SourceType = .camera
@@ -26,19 +36,19 @@ struct CameraPickerView: UIViewControllerRepresentable {
             picker.sourceType = self.sourceType
             if let mediaTypes = UIImagePickerController.availableMediaTypes(for: .camera) {
                 picker.mediaTypes = mediaTypes
-            } 
-//            else {
-//                picker.mediaTypes = ["public.image"]
-//            }
-        } 
-//        else {
-//            picker.sourceType = .photoLibrary
-//            if let mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary) {
-//                picker.mediaTypes = mediaTypes
-//            } else {
-//                picker.mediaTypes = ["public.image"]
-//            }
-//        }
+            }
+            //            else {
+            //                picker.mediaTypes = ["public.image"]
+            //            }
+        }
+        //        else {
+        //            picker.sourceType = .photoLibrary
+        //            if let mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary) {
+        //                picker.mediaTypes = mediaTypes
+        //            } else {
+        //                picker.mediaTypes = ["public.image"]
+        //            }
+        //        }
         picker.delegate = context.coordinator
         return picker
     }

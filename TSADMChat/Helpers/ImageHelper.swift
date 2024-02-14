@@ -9,6 +9,13 @@ import Foundation
 import PhotosUI
 import CloudKit
 
+/**
+ # toCKAsset #
+ A function that returns a CKAsset from a Data.
+ 
+ - parameter data: The data to be converted to a CKAsset.
+ - returns: A CKAsset with the data.
+ */
 extension Data{
     
     func toCKAsset()-> CKAsset?{
@@ -29,18 +36,25 @@ extension Data{
     }
 }
 
+/**
+ # toData #
+ A function that returns a Data from a CKAsset.
+ 
+ - parameter data: The CKAsset to be converted to a Data.
+ - returns: A Data with the data from the CKAsset.
+ */
 extension CKAsset{
     
     func toData() -> Data?{
         do{
             if let url = fileURL{
-                 let data =  try NSData(contentsOf:url) as Data
+                let data =  try NSData(contentsOf:url) as Data
                 return data
             }
         }catch{
             print(error)
         }
-    
+        
         return nil
     }
 }

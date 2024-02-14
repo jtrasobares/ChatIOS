@@ -4,15 +4,15 @@
 //
 //  Created by Daniel Muñoz on 5/2/24.
 //
- 
+
 import SwiftUI
 import SwiftData
 import PhotosUI
 import LocalAuthentication
- 
+
 /**
-    # LoginView #
-    This view is used to create or update the user's account depending on the presence of previous data of the user
+ # LoginView #
+ This view is used to create or update the user's account depending on the presence of previous data of the user
  - parameter state: Binding to the StateViewApp
  - returns: View
  */
@@ -33,7 +33,7 @@ struct LoginView : View {
     @State private var isUpdating: Bool = UserDefaults.standard.string(forKey: "username") != nil
     @State private var text: String = UserDefaults.standard.string(forKey: "username") != nil ? "Update Account": "Create Account"
     @State var type: UIImagePickerController.SourceType = .photoLibrary
-
+    
     func loginNewUsername() {
         UserDefaults.standard.set(username, forKey: "username")
         UserDefaults.standard.set(securityEnable, forKey: "security")
@@ -58,14 +58,14 @@ struct LoginView : View {
             ScrollView {
                 VStack(spacing: 16) {
                     avatarModularIcon()
-                
+                    
                     TextField("Username", text: $username)
                         .padding()
                         .background(Color(.white))
                         .cornerRadius(10)
                         .foregroundColor(.black)
                     Toggle(isOn: $securityEnable) {
-                            Text("Security in the app")
+                        Text("Security in the app")
                     }
                     Button {
                         isFinished = true
@@ -166,7 +166,7 @@ struct LoginView : View {
             }
         } label: {
             if let avatarImageData,
-            let uiAvatar = UIImage(data: avatarImageData) {
+               let uiAvatar = UIImage(data: avatarImageData) {
                 Image(uiImage: uiAvatar)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -180,8 +180,8 @@ struct LoginView : View {
         .popover(isPresented: $showImagePopover) {
             imagePopupView(imageData: avatarImageData!, hideDelegate: {
                 showImagePopover.toggle()
-           })
-                .onTapGesture {
+            })
+            .onTapGesture {
                 showImagePopover.toggle()
             }
         }
@@ -194,7 +194,7 @@ struct LoginView : View {
         .padding(.top)
     }
 }
- 
+
 //Preview
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {

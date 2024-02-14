@@ -9,6 +9,12 @@ import Foundation
 import SwiftUI
 import SwiftData
 
+/**
+ # QueryView #
+ A view that represents a query to the database.
+ 
+ - note: https://ihor.pro/implementing-a-swiftdata-query-view-as-the-most-convenient-way-to-fetch-data-in-swiftui-f69d59348783
+ */
 struct QueryView<Model: PersistentModel, Content: View>: View {
     
     @Query private var query: [Model]

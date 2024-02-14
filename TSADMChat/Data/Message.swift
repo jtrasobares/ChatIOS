@@ -8,6 +8,16 @@
 import SwiftUI
 import SwiftData
 
+/**
+ # Message #
+ A class that represents a message.
+ 
+ - parameter id: The id of the message.
+ - parameter text: The text of the message.
+ - parameter image: The image of the message.
+ - parameter date: The date of the message.
+ - parameter user: The user of the message.
+ */
 @Model
 class Message{
     var id: String
@@ -33,4 +43,4 @@ class Message{
         return imageUI
     }
     
- }
+}

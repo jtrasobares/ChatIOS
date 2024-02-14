@@ -9,6 +9,10 @@ import Foundation
 import CloudKit
 import UIKit
 
+/**
+ # CloudKitHelper #
+ A struct to manage the CloudKit operations. It contains the functions to download the messages and to send a message.
+ */
 struct CloudKitHelper {
     
     static let subscriptionID = "NEW_MESSAGE"
@@ -63,28 +67,28 @@ struct CloudKitHelper {
     public func downloadMessages(from: Date?) async -> ([CKMessage],[User]) {
         var messages = [CKMessage]()
         var users: [User] = []
-           
+        
         await downloadMessages(from: from) { recordID, recordResult in
-           
-           switch (recordResult) {
-           case .success(let record):
-               let user = record.creatorUserRecordID?.recordName
-               let date = record.creationDate!
-               let text = record["text"] as! String? ?? ""
-               
-               var image: Data? = nil
-               if record["image"] != nil{
-                   image = (record["image"] as! CKAsset).toData()
-               }
-               messages.append(
-                CKMessage(id:recordID.recordName,date:date,userID: user,text:text,image:image)
-               )
-               
-           case .failure(let error):
-               print("Error retrieving data: \(error)")
-           }
+            
+            switch (recordResult) {
+            case .success(let record):
+                let user = record.creatorUserRecordID?.recordName
+                let date = record.creationDate!
+                let text = record["text"] as! String? ?? ""
+                
+                var image: Data? = nil
+                if record["image"] != nil{
+                    image = (record["image"] as! CKAsset).toData()
+                }
+                messages.append(
+                    CKMessage(id:recordID.recordName,date:date,userID: user,text:text,image:image)
+                )
+                
+            case .failure(let error):
+                print("Error retrieving data: \(error)")
+            }
         }
-
+        
         for message in messages {
             do{
                 let idUser = message.userID!
@@ -104,45 +108,45 @@ struct CloudKitHelper {
                 print(error)
             }
         }
-
+        
         return (messages,users)
-       }
+    }
     
     
     public func updateUser(newName: String, image: CKAsset?) async throws -> Result<Void, Error> {
-            let recordID = try await myUserRecordID()
-            let container = CKContainer.default()
-            let db = container.publicCloudDatabase
-
-            do {
-                let record = try await db.record(for: CKRecord.ID(recordName: recordID))
-                print(record)
-                record["name"] = newName  // Assign the new name directly
-                if image != nil{
-                    record["thumbnail"] = image
-                }
-                try await db.save(record)
-                return .success(())
-            } catch {
-                return .failure(error)
+        let recordID = try await myUserRecordID()
+        let container = CKContainer.default()
+        let db = container.publicCloudDatabase
+        
+        do {
+            let record = try await db.record(for: CKRecord.ID(recordName: recordID))
+            print(record)
+            record["name"] = newName  // Assign the new name directly
+            if image != nil{
+                record["thumbnail"] = image
             }
+            try await db.save(record)
+            return .success(())
+        } catch {
+            return .failure(error)
+        }
     }
     
     public func getUser(recordID: String) async -> Result<User, Error> {
-            let container = CKContainer.default()
-            let db = container.publicCloudDatabase
-            do {
-                let record = try await db.record(for: CKRecord.ID(recordName: recordID))
-                let name = record["name"] as! String? ?? ""
-                var image: Data? = nil
-                if record["thumbnail"] != nil{
-                    image = (record["thumbnail"] as! CKAsset).toData()
-                }
-                let user = User(id: record.creatorUserRecordID?.recordName, name: name, image: image)
-                return .success(user)
-            } catch {
-                return .failure(error)
+        let container = CKContainer.default()
+        let db = container.publicCloudDatabase
+        do {
+            let record = try await db.record(for: CKRecord.ID(recordName: recordID))
+            let name = record["name"] as! String? ?? ""
+            var image: Data? = nil
+            if record["thumbnail"] != nil{
+                image = (record["thumbnail"] as! CKAsset).toData()
             }
+            let user = User(id: record.creatorUserRecordID?.recordName, name: name, image: image)
+            return .success(user)
+        } catch {
+            return .failure(error)
+        }
     }
     
     public func sendMessage(_ text: String, _ attachment: Data?) async throws {
@@ -172,7 +176,7 @@ struct CloudKitHelper {
             let info = CKSubscription.NotificationInfo()
             info.soundName = "chan.aiff"
             //info.alertBody = "New message"
-
+            
             info.alertLocalizationKey = "%1$@"
             info.alertLocalizationArgs = ["text"]
             
@@ -192,7 +196,7 @@ struct CloudKitHelper {
             }else if success{
                 print("Notification permissions success!")
                 Task{
-                   await UIApplication.shared.registerForRemoteNotifications()
+                    await UIApplication.shared.registerForRemoteNotifications()
                 }
             }else{
                 print("Notification permissions failure")
@@ -200,7 +204,7 @@ struct CloudKitHelper {
         }
         
     }
-        
+    
     
     
 }

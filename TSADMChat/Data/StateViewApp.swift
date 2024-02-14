@@ -7,7 +7,10 @@
 
 import Foundation
 
-
+/**
+ # StateViewApp #
+ A enum that represents the state of the app.
+ */
 enum StateViewApp {
     case loading
     case registering

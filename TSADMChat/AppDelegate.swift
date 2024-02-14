@@ -7,6 +7,10 @@
 import SwiftUI
 import CloudKit
 
+/**
+ # AppDelegate #
+ A class that represents the app delegate. Handles the remote notifications.
+ */
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     func application(_ application: UIApplication,

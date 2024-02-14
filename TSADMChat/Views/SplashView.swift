@@ -12,11 +12,11 @@ import CloudKit
 import LocalAuthentication
 
 /**
-    # SplashView #
-    This view is used to show the splash screen of the app
+ # SplashView #
+ This view is used to show the splash screen of the app
  
  - parameter state: Binding to the StateViewApp
-
+ 
  */
 struct SplashView: View {
     @Environment(\.modelContext) var modelContext
@@ -24,7 +24,7 @@ struct SplashView: View {
     @Binding var state: StateViewApp
     @Query var users: [User]
     @State private var needsTryLogin = false
-
+    
     @State var user: User?
     
     var body: some View {
@@ -36,12 +36,12 @@ struct SplashView: View {
                     ViewDefaultSplashScreen()
                 }
             }.scaleEffect(scale)
-            .onAppear{
-                withAnimation(.easeIn(duration: 0.7)) {
-                    self.scale = 0.9
+                .onAppear{
+                    withAnimation(.easeIn(duration: 0.7)) {
+                        self.scale = 0.9
+                    }
+                    
                 }
-                
-            }
         }
     }
     
@@ -54,7 +54,7 @@ struct SplashView: View {
                         .clipShape(Circle())
                         .scaledToFit()
                         .padding(.all,32)
-                        
+                    
                 }else{
                     Image(systemName: "person.fill")
                         .resizable()
@@ -76,7 +76,7 @@ struct SplashView: View {
                 }.opacity(needsTryLogin ? 1 : 0)
                     .buttonStyle(.borderedProminent)
                     .font(.system(size: 28, weight: .semibold))
-                    
+                
             }
             
         }.onAppear{
@@ -184,7 +184,7 @@ struct SplashView: View {
                 } catch{
                     print(error)
                 }
-                    
+                
                 withAnimation(.easeInOut(duration: 2)) {
                     self.state = .registering
                 }
@@ -196,7 +196,7 @@ struct SplashView: View {
         }
         
     }
-
+    
 }
 
 //Preview

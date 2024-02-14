@@ -8,9 +8,11 @@
 import SwiftUI
 import SwiftData
 
+/**
+ # ListChatView #
+ This view is used to show the list of messages in the chat
+ */
 struct ListChatView: View {
-
-    //@Query(sort: \Message.date, order: .forward, animation: .easeIn) var messages: [Message]
     
     var body: some View {
         QueryView(for: Message.self, sort: [SortDescriptor(\Message.date, order: .forward)], content: { messages in
@@ -37,4 +39,4 @@ struct ListChatView: View {
         })
     }
 }
-            
+
