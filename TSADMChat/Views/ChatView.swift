@@ -15,7 +15,7 @@ import PhotosUI
 struct ChatView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.scenePhase) var scenePhase
-    @State private var message: String = ""
+    @State private var messageText: String = ""
     @State private var attachement: Data? = nil
     @Query(sort: \Message.date, order: .forward, animation: .easeIn) var messages: [Message]
     @Query var users: [User]
@@ -68,27 +68,50 @@ struct ChatView: View {
                         
                         
                         // RoundedRectangle
-                        HStack {
-                            TextField("Send a message", text: $message)
-                                .padding(.vertical, 2)
-                                .padding(.horizontal, 8)
-                        }
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color(.systemGray5))
+                            .frame(height: 40)
+                            .overlay(
+                                HStack {
+                                    if attachement != nil {
+                                        // Miniature of the image (attachment)
+                                        Image(systemName: "photo.fill")
+                                            .foregroundColor(.blue)
+                                            .padding(.leading, 10)
+                                            .onTapGesture {
+                                                showImagePopover.toggle()
+                                            }
+                                            .popover(isPresented: $showImagePopover, arrowEdge: .bottom, content: {
+                                                imagePopupView(imageData: attachement!,
+                                                               deleteDelegate: {
+                                                                attachement = nil
+                                                                avatarItem = nil
+                                                               },
+                                                               hideDelegate: {
+                                                                    showImagePopover.toggle()
+                                                               })
+                                            })
+                                    }
+                                    TextField("Send a message", text: $messageText)
+                                        .padding(.horizontal, 8)
+                                }
+                            )
                         
                         Button {
-                            guard message.count > 0 else {
+                            guard messageText.count > 0 else {
                                 return
                             }
-                            sendAndShowMessage(text:message, attachment: attachement)
+                            sendAndShowMessage(text:messageText, attachment: attachement)
                             
                         } label: {
                             //Paper plane icon that gets gray or blue depending on the message
                             Image(systemName: "paperplane")
-                                .foregroundColor(message.count > 0 ? .blue : .gray)
+                                .foregroundColor(messageText.count > 0 ? .blue : .gray)
                                 .scaledToFit()
                                 .frame(width: 30, height: 30)
                         }
                         .padding(.leading, 10)
-                        .disabled(message.count == 0)
+                        .disabled(messageText.count == 0)
                     }
                     .padding(.horizontal)
                     .padding(.top, 10)
@@ -172,9 +195,9 @@ struct ChatView: View {
                 
             }
             if let user = try users.filter(#Predicate{ user in user.id == "__defaultOwner__"}).first{
-                modelContext.insert(Message(id:"Local",date: Date.now,text: message, image: attachment, user: user))
+                modelContext.insert(Message(id:"Local",date: Date.now,text: messageText, image: attachment, user: user))
             }
-            message = ""
+            messageText = ""
         }catch{
             print(error)
         }
